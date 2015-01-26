@@ -3,5 +3,8 @@
 
     <string name="app_name">RoseCareerFair</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="search_title">search</string>
 
 </resources>
