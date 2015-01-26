@@ -32,5 +32,6 @@
     <string name="info">Info</string>
     <string name="favorites">Favorites</string>
     <string name="sign_out">Sign Out</string>
+    <string name="company_logo">Company Logo</string>
     
 </resources>

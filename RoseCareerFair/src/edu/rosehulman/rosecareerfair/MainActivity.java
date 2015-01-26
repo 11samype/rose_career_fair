@@ -35,6 +35,17 @@ public class MainActivity extends Activity {
 			}
 		});
 		
+		Button noteButton = (Button)findViewById(R.id.note_button);
+		noteButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent noteIntent = new Intent(getApplicationContext(), NoteActivity.class);
+				startActivity(noteIntent);
+				
+			}
+		});
+		
 		searchButton.setOnClickListener(new OnClickListener() {
 			
 			@Override

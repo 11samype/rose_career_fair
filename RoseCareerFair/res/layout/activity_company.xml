@@ -3,7 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+	
+    <ImageView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/r_logo"
+        android:contentDescription="@string/company_logo"
+        android:layout_gravity="center_horizontal" />
+    
     <TextView
         android:id="@+id/company_bio_text"
         android:layout_width="wrap_content"

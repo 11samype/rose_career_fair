@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
 
 public class NoteActivity extends Activity {
 
@@ -20,7 +22,7 @@ public class NoteActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_note);
 		
-		Button interviewButton = (Button) findViewById(R.id.interview_button);
+		final Button interviewButton = (Button) findViewById(R.id.interview_button);
 		interviewButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -41,6 +43,17 @@ public class NoteActivity extends Activity {
 							public void onClick(DialogInterface dialog, int which) {
 								// TODO Add Interview
 								
+								DatePicker datePicker = (DatePicker) ((AlertDialog) dialog).findViewById(R.id.datePicker1);
+								int year = datePicker.getYear();
+								int month = datePicker.getMonth();
+								int dayOfMonth = datePicker.getDayOfMonth();
+								
+								TimePicker timePicker = (TimePicker) ((AlertDialog) dialog).findViewById(R.id.timePicker1);
+								int hour = timePicker.getCurrentHour();
+								int minute = timePicker.getCurrentMinute();
+								
+								interviewButton.setText("" + month + "/"+ dayOfMonth + "/" + year + " " + hour + ":" + minute);
+								
 							}
 						});
 						
@@ -48,7 +61,8 @@ public class NoteActivity extends Activity {
 							
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								// Do nothing
+								// Remove interview
+								interviewButton.setText(R.string.schedule_interview);
 								
 							}
 						});
