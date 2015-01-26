@@ -6,5 +6,20 @@
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="search_title">search</string>
+    <string name="rose_logo">Rose Logo</string>
+    <string name="map">Map</string>
+    <string name="search">Search</string>
+    <string name="profile">Profile</string>
+    <string name="log_in">Log In</string>
+    <string name="title_activity_company">CompanyActivity</string>
+    <string name="looking_for">Looking For:</string>
+    <string name="majors">Majors:</string>
+    <string name="intern">Intern</string>
+    <string name="full_time">Full Time</string>
+    <string name="submit">Submit</string>
+    <string name="title_activity_note">NoteActivity</string>
+    <string name="interview_date">Interview Date</string>
+    <string name="interview_time">Interview Time</string>
+    <string name="notes">Notes</string>
 
 </resources>
