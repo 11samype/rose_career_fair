@@ -14,24 +14,28 @@
         android:id="@+id/company_looking_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/looking_for" />
+        android:text="@string/looking_for"
+        android:layout_gravity="center_horizontal" />
     
     <TextView
         android:id="@+id/company_work_type_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text=""
+        android:layout_gravity="center_horizontal" />
     
     <TextView
         android:id="@+id/company_major_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/majors" />
+        android:text="@string/majors"
+        android:layout_gravity="center_horizontal" />
     
     <TextView
         android:id="@+id/company_major_list_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text=""
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

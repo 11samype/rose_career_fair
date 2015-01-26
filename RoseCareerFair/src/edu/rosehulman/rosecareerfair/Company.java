@@ -17,10 +17,10 @@ public class Company implements Parcelable {
 	
 	public Company() {
 		setName("Company");
-		setBio("Bio");
+		setBio("Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio BioBio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio");
 		setLogo("URL");
 		setFavorite(false);
-		setMajors(new String[] {"CS/SE", "ME"});
+		setMajors(new String[] {"CS", "SE", "ME"});
 		setWorkType(new boolean[] {true, false}); // [0] - intern, [1] - full time
 	}
 	

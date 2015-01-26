@@ -21,5 +21,7 @@
     <string name="interview_date">Interview Date</string>
     <string name="interview_time">Interview Time</string>
     <string name="notes">Notes</string>
-
+    <string name="schedule_interview">Schedule Interview</string>
+	<string name="interview">Interview</string>
+    
 </resources>

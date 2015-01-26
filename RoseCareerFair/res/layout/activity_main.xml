@@ -41,4 +41,13 @@
         android:layout_marginTop="20dp"
         android:text="@string/profile" />
 
+    <Button
+        android:id="@+id/company_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp"
+        android:text="@string/title_activity_company" />
+
 </RelativeLayout>
