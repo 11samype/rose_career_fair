@@ -23,5 +23,14 @@
     <string name="notes">Notes</string>
     <string name="schedule_interview">Schedule Interview</string>
 	<string name="interview">Interview</string>
+    <string name="title_activity_login">Login</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="empty"/>
+    <string name="info">Info</string>
+    <string name="favorites">Favorites</string>
+    <string name="sign_out">Sign Out</string>
     
 </resources>
