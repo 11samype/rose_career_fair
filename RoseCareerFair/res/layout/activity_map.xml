@@ -1,9 +1,307 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-	
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" >
 
-</RelativeLayout>
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TableLayout
+                android:id="@+id/fairFloor"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" >
+
+                <TableRow
+                    android:id="@+id/tableRow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/rose_hulman_red" />
+                </TableRow>
+            </TableLayout>
+        </HorizontalScrollView>
+    </ScrollView>
+
+</LinearLayout>
