@@ -29,14 +29,22 @@
         <activity
             android:name=".MapActivity"
             android:label="@string/title_activity_map" >
-		</activity>
-		<activity
+        </activity>
+        <activity
             android:name=".CompanyActivity"
             android:label="@string/title_activity_company" >
         </activity>
         <activity
             android:name=".NoteActivity"
             android:label="@string/title_activity_note" >
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile" >
         </activity>
     </application>
 
