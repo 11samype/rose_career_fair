@@ -13,14 +13,22 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 public class NoteActivity extends Activity {
 
+	boolean scheduled;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_note);
+		
+		scheduled = false;
+		
+		final TextView interviewText = (TextView)findViewById(R.id.interview_time);
+		
 		
 		final Button interviewButton = (Button) findViewById(R.id.interview_button);
 		interviewButton.setOnClickListener(new OnClickListener() {
@@ -37,7 +45,7 @@ public class NoteActivity extends Activity {
 						View interviewView = inflator.inflate(R.layout.dialog_interview, null);
 						
 						builder.setView(interviewView);
-						builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
 							
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
@@ -52,17 +60,33 @@ public class NoteActivity extends Activity {
 								int hour = timePicker.getCurrentHour();
 								int minute = timePicker.getCurrentMinute();
 								
-								interviewButton.setText("" + month + "/"+ dayOfMonth + "/" + year + " " + hour + ":" + minute);
+								String leadingZero = "";
 								
+								if (minute < 10) {
+									leadingZero = "0";
+								}
+								
+								interviewText.setText("" + (month + 1) + "/"+ dayOfMonth + "/" + year + " " + hour + ":" + leadingZero + minute);
+								interviewButton.setText(R.string.edit);
 							}
 						});
 						
-						builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+						builder.setNegativeButton(R.string.delete, new DialogInterface.OnClickListener() {
 							
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								// Remove interview
 								interviewButton.setText(R.string.schedule_interview);
+								interviewText.setText("");
+								
+							}
+						});
+						
+						builder.setNeutralButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
 								
 							}
 						});
@@ -71,6 +95,17 @@ public class NoteActivity extends Activity {
 					}
 				};
 				df.show(getFragmentManager(), "interview");
+				
+			}
+		});
+		
+		Button saveButton = (Button)findViewById(R.id.button_save);
+		saveButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				finish();
 				
 			}
 		});

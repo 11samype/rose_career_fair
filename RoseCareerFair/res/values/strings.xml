@@ -28,10 +28,19 @@
     <string name="password">password</string>
     <string name="sign_in">Sign In</string>
     <string name="title_activity_profile">ProfileActivity</string>
-    <string name="empty"/>
     <string name="info">Info</string>
     <string name="favorites">Favorites</string>
     <string name="sign_out">Sign Out</string>
     <string name="company_logo">Company Logo</string>
+    <string name="submit_wait_time">Submit Wait Time</string>
+    <string name="wait_time">Wait Time</string>
+    <string name="radio_short">Short</string>
+    <string name="radio_medium">Medium</string>
+    <string name="radio_long">Long</string>
+    <string name="about">About</string>
+    <string name="save">Save</string>
+    <string name="save_notes">Save Notes</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
     
 </resources>

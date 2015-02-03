@@ -50,12 +50,4 @@
         android:layout_marginTop="22dp"
         android:text="@string/title_activity_company" />
 
-    <Button
-        android:id="@+id/note_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/company_button"
-        android:layout_centerHorizontal="true"
-        android:text="@string/title_activity_note" />
-
 </RelativeLayout>

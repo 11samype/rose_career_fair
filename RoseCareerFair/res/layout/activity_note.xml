@@ -4,21 +4,48 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+    	android:layout_centerVertical="true"
+    	android:layout_alignParentTop="true" >
+   		
+        <TextView 
+            android:id="@+id/interview_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="20sp" />
+        
+	    <Button
+	        android:id="@+id/interview_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/schedule_interview" />
+   	</TableRow>
+
     <EditText
         android:id="@+id/notes"
         android:layout_width="fill_parent"
         android:layout_height="300dp"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/button_save"
         android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tableRow1"
         android:ems="10"
-        android:hint="@string/notes" />
+        android:gravity="top|center_vertical"
+        android:hint="@string/notes" >
+
+        <requestFocus />
+    </EditText>
 
     <Button
-        android:id="@+id/interview_button"
+        android:id="@+id/button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/schedule_interview" />
+        android:text="@string/save_notes" />
     
 </RelativeLayout>
