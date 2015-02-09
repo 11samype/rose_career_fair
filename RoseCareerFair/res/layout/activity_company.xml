@@ -5,11 +5,13 @@
     android:orientation="vertical" >
 	
     <ImageView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/company_logo"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
         android:src="@drawable/r_logo"
         android:contentDescription="@string/company_logo"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitCenter" />
 
     <TableRow
            android:id="@+id/tableRow1"

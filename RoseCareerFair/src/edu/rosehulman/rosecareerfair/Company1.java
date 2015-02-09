@@ -4,7 +4,7 @@ import android.media.Image;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Company implements Parcelable {
+public class Company1 implements Parcelable {
 	
 	private String mName;
 	private String mBio;
@@ -15,7 +15,7 @@ public class Company implements Parcelable {
 	
 	//public static final String[] MAJORS =  {"CSSE", "CPE", "ME"};
 	
-	public Company() {
+	public Company1() {
 		setName("Company");
 		setBio("Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio BioBio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio");
 		setLogo("URL");
@@ -24,7 +24,7 @@ public class Company implements Parcelable {
 		setWorkType(new boolean[] {true, false}); // [0] - intern, [1] - full time
 	}
 	
-	public Company(String name, String bio, String logo, boolean favorite, String[] majors, boolean[] workType) {
+	public Company1(String name, String bio, String logo, boolean favorite, String[] majors, boolean[] workType) {
 		setName(name);
 		setBio(bio);
 		setLogo(logo);
@@ -82,21 +82,21 @@ public class Company implements Parcelable {
 		
 	}
 	
-	public static final Parcelable.Creator<Company> CREATOR = new Parcelable.Creator<Company>() {
+	public static final Parcelable.Creator<Company1> CREATOR = new Parcelable.Creator<Company1>() {
 
 		@Override
-		public Company createFromParcel(Parcel source) {
-			return new Company(source);
+		public Company1 createFromParcel(Parcel source) {
+			return new Company1(source);
 		}
 
 		@Override
-		public Company[] newArray(int size) {
-			return new Company[size];
+		public Company1[] newArray(int size) {
+			return new Company1[size];
 		}
 		
 	};
 	
-	private Company(Parcel in) {
+	private Company1(Parcel in) {
 		
 		this.mName = in.readString();
 		this.mBio = in.readString();

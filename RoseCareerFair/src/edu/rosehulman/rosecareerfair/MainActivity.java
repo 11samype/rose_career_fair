@@ -12,6 +12,7 @@ import android.widget.Button;
 public class MainActivity extends Activity {
 
 	public static final String KEY_COMPANY = "KEY_COMPANY";
+	public static final String RCF = "RCF";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,19 +22,6 @@ public class MainActivity extends Activity {
 		Button mapButton = (Button)findViewById(R.id.map_button);
 		Button searchButton = (Button)findViewById(R.id.search_button);
 		Button profileButton = (Button)findViewById(R.id.profile_button);
-		
-		Button companyButton = (Button)findViewById(R.id.company_button);
-		
-		companyButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent companyIntent = new Intent(getApplicationContext(), CompanyActivity.class);
-				companyIntent.putExtra(KEY_COMPANY, new Company());
-				startActivity(companyIntent);
-				
-			}
-		});
 		
 		searchButton.setOnClickListener(new OnClickListener() {
 			

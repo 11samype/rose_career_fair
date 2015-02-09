@@ -1,6 +1,14 @@
 package edu.rosehulman.rosecareerfair;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+
+import com.appspot.rose_hulman_career_fair.careerfair.Careerfair;
+import com.appspot.rose_hulman_career_fair.careerfair.model.Company;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.json.gson.GsonFactory;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -9,18 +17,24 @@ import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CompanyActivity extends Activity {
 	
 	private Company company;
+	private Careerfair mService;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,35 +42,51 @@ public class CompanyActivity extends Activity {
 		setContentView(R.layout.activity_company);
 		
 		Intent intent = getIntent();
-		company = intent.getParcelableExtra(MainActivity.KEY_COMPANY);
 		
-		TextView workTypeText = (TextView)findViewById(R.id.company_work_type_text);
+		Bundle extras = intent.getExtras();
+		company = new Company();
+		company.setName(extras.getString(SearchActivity.KEY_COMPANY_NAME));
+		company.setBio(extras.getString(SearchActivity.KEY_COMPANY_BIO));
+		company.setLogo(extras.getString(SearchActivity.KEY_COMPANY_LOGO));
 		
-		boolean[] workType = company.getWorkType();
-		String workTypeString = new String();
+		Log.d(MainActivity.RCF, company.getLogo());
 		
-		if (workType[0] && workType[1]) {
-			workTypeString = "Interns & Full Time";
-		} else if (workType[0]) {
-			workTypeString = "Interns";
-		} else {
-			workTypeString = "Full Time";
-		}
+		Careerfair.Builder builder = new Careerfair.Builder(AndroidHttp.newCompatibleTransport(),
+				new GsonFactory(), null);
+		mService = builder.build();
 		
-		workTypeText.setText(workTypeString);
+		ImageView companyLogo = (ImageView) findViewById(R.id.company_logo);
+		new ImageLoadTask(company.getLogo(), companyLogo).execute();
 		
-		TextView majorListText = (TextView)findViewById(R.id.company_major_list_text);
+//		company = intent.getParcelableExtra(MainActivity.KEY_COMPANY);
 		
-		String majorText = new String();
-		majorText = "";
-		String[] majors = company.getMajors();
-		majorText += majors[0];
-		
-		for (int i = 1; i < majors.length; i++) {
-			majorText += (", " + majors[i]);
-		}
-		
-		majorListText.setText(majorText);
+//		TextView workTypeText = (TextView)findViewById(R.id.company_work_type_text);
+//		
+//		boolean[] workType = company.getWorkType();
+//		String workTypeString = new String();
+//		
+//		if (workType[0] && workType[1]) {
+//			workTypeString = "Interns & Full Time";
+//		} else if (workType[0]) {
+//			workTypeString = "Interns";
+//		} else {
+//			workTypeString = "Full Time";
+//		}
+//		
+//		workTypeText.setText(workTypeString);
+//		
+//		TextView majorListText = (TextView)findViewById(R.id.company_major_list_text);
+//		
+//		String majorText = new String();
+//		majorText = "";
+//		String[] majors = company.getMajors();
+//		majorText += majors[0];
+//		
+//		for (int i = 1; i < majors.length; i++) {
+//			majorText += (", " + majors[i]);
+//		}
+//		
+//		majorListText.setText(majorText);
 		
 		Button waitTimeButton = (Button)findViewById(R.id.button_wait_time);
 		waitTimeButton.setOnClickListener(new OnClickListener() {
@@ -151,6 +181,40 @@ public class CompanyActivity extends Activity {
 				
 			}
 		});
+		
+	}
+	
+	public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
+		
+		private String url;
+		private ImageView imageView;
+		
+		public ImageLoadTask(String url, ImageView imageView) {
+			this.url = url;
+			this.imageView = imageView;
+		}
+		
+		@Override
+		protected Bitmap doInBackground(Void... params) {
+			try {
+				URL urlConnection = new URL(url);
+				HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
+				connection.setDoInput(true);
+				connection.connect();
+				InputStream input = connection.getInputStream();
+				Bitmap myBitmap = BitmapFactory.decodeStream(input);
+				return myBitmap;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Bitmap result) {
+			super.onPostExecute(result);
+			imageView.setImageBitmap(result);
+		}
 		
 	}
 }
