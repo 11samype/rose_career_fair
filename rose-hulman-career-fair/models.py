@@ -5,7 +5,7 @@ from endpoints_proto_datastore.ndb.model import EndpointsModel
 class Company(EndpointsModel):
     _message_fields_schema = ("entityKey", "name", "bio", "logo")
     name = ndb.StringProperty()
-    bio = ndb.StringProperty()
+    bio = ndb.TextProperty()
     logo = ndb.StringProperty()
     last_touch_date_time = ndb.DateTimeProperty(auto_now=True)
     
