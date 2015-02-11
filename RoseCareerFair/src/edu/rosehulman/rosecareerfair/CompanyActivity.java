@@ -1,12 +1,15 @@
 package edu.rosehulman.rosecareerfair;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
 import com.appspot.rose_hulman_career_fair.careerfair.Careerfair;
+import com.appspot.rose_hulman_career_fair.careerfair.Careerfair.Linelength;
 import com.appspot.rose_hulman_career_fair.careerfair.model.Company;
+import com.appspot.rose_hulman_career_fair.careerfair.model.LineLength;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.gson.GsonFactory;
 
@@ -33,8 +36,9 @@ import android.widget.TextView;
 
 public class CompanyActivity extends Activity {
 	
-	private Company company;
+	private Company mCompany;
 	private Careerfair mService;
+	private LineLength mLinelength;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,19 +48,20 @@ public class CompanyActivity extends Activity {
 		Intent intent = getIntent();
 		
 		Bundle extras = intent.getExtras();
-		company = new Company();
-		company.setName(extras.getString(SearchActivity.KEY_COMPANY_NAME));
-		company.setBio(extras.getString(SearchActivity.KEY_COMPANY_BIO));
-		company.setLogo(extras.getString(SearchActivity.KEY_COMPANY_LOGO));
+		mCompany = new Company();
+		mCompany.setName(extras.getString(SearchActivity.KEY_COMPANY_NAME));
+		mCompany.setBio(extras.getString(SearchActivity.KEY_COMPANY_BIO));
+		mCompany.setLogo(extras.getString(SearchActivity.KEY_COMPANY_LOGO));
+		mCompany.setEntityKey(extras.getString(SearchActivity.KEY_COMPANY_ENTITY_KEY));
 		
-		Log.d(MainActivity.RCF, company.getLogo());
+		Log.d(MainActivity.RCF, mCompany.getLogo());
 		
 		Careerfair.Builder builder = new Careerfair.Builder(AndroidHttp.newCompatibleTransport(),
 				new GsonFactory(), null);
 		mService = builder.build();
 		
 		ImageView companyLogo = (ImageView) findViewById(R.id.company_logo);
-		new ImageLoadTask(company.getLogo(), companyLogo).execute();
+		new ImageLoadTask(mCompany.getLogo(), companyLogo).execute();
 		
 //		company = intent.getParcelableExtra(MainActivity.KEY_COMPANY);
 		
@@ -88,6 +93,10 @@ public class CompanyActivity extends Activity {
 //		
 //		majorListText.setText(majorText);
 		
+		updateLineStatus();
+		
+//		Log.d(MainActivity.RCF, mLinelength.getLength().toString());
+		
 		Button waitTimeButton = (Button)findViewById(R.id.button_wait_time);
 		waitTimeButton.setOnClickListener(new OnClickListener() {
 			
@@ -98,7 +107,7 @@ public class CompanyActivity extends Activity {
 					public Dialog onCreateDialog(Bundle savedInstanceState) {
 						
 						AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-						builder.setTitle(company.getName() + " " + getResources().getString(R.string.wait_time));
+						builder.setTitle(mCompany.getName() + " " + getResources().getString(R.string.wait_time));
 						
 						builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
 							
@@ -113,20 +122,17 @@ public class CompanyActivity extends Activity {
 							
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								switch (which) {
-								case 1:
-									// send short line
-									break;
-
-								case 2:
-									// send medium line
-									break;
-									
-								case 3:
-									// send long line
-									break;
-								}
 								
+								int length = which + 1;
+								
+								Log.d(MainActivity.RCF, "line length to send: " + length);
+								
+								LineLength newLineLength = new LineLength();
+
+								newLineLength.setCompanyEntityKey(mCompany.getEntityKey());
+								newLineLength.setLength((long) length);
+
+								(new InsertLineLengthTask()).execute(newLineLength);
 							}
 						});
 						
@@ -161,8 +167,8 @@ public class CompanyActivity extends Activity {
 					@Override
 					public Dialog onCreateDialog(Bundle savedInstanceState) {
 						AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-						builder.setTitle(getResources().getString(R.string.about) + " " + company.getName());
-						builder.setMessage(company.getBio());
+						builder.setTitle(getResources().getString(R.string.about) + " " + mCompany.getName());
+						builder.setMessage(mCompany.getBio());
 						
 						builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 							
@@ -181,6 +187,11 @@ public class CompanyActivity extends Activity {
 				
 			}
 		});
+		
+	}
+	
+	private void updateLineStatus() {
+		(new QueryForLineLengthTask()).execute();
 		
 	}
 	
@@ -214,6 +225,112 @@ public class CompanyActivity extends Activity {
 		protected void onPostExecute(Bitmap result) {
 			super.onPostExecute(result);
 			imageView.setImageBitmap(result);
+		}
+		
+	}
+	
+	class QueryForLineLengthTask extends AsyncTask<String, Void, LineLength> {
+
+		@Override
+		protected LineLength doInBackground(String... params) {
+			LineLength returnedValue = null;
+			
+			Log.d(MainActivity.RCF, "executed: " + mCompany.getEntityKey());
+			
+			try {
+				returnedValue = mService.linelength().status(mCompany.getEntityKey()).execute();
+			} catch (IOException e) {
+				Log.e(MainActivity.RCF, "Error in loading, linelength is null: " + e);
+			}
+			
+			Log.d(MainActivity.RCF, "linelength: " + returnedValue.getLength());
+			
+			return returnedValue;
+		}
+		
+		@Override
+		protected void onPostExecute(LineLength result) {
+			super.onPostExecute(result);
+			
+			Log.d(MainActivity.RCF, "executed");
+			
+			if (result == null) {
+				Log.e(MainActivity.RCF, "Error in loading, linelength is null");
+			}
+			
+			mLinelength = result;
+			
+			Log.d(MainActivity.RCF, mCompany.getEntityKey());
+			
+			Log.d(MainActivity.RCF, "wait time: " + mLinelength.getLength());
+			
+			Button lineLengthButton = (Button)findViewById(R.id.button_wait_time_status);
+			
+			int length = mLinelength.getLength().intValue();
+			Log.d(MainActivity.RCF, "length: " + length);
+			
+			int linelengthString = 0;
+			int color = 0;
+			
+			switch (length) {
+			case 0:
+				linelengthString = R.string.unknown;
+				color = R.color.gray;
+				
+				break;
+			
+			case 1:
+				linelengthString = R.string.short_line;
+				color = R.color.green;
+				
+				break;
+				
+			case 2:
+				linelengthString = R.string.medium_line;
+				color = R.color.yellow;
+				
+				break;
+				
+			case 3:
+				linelengthString = R.string.long_line;
+				color = R.color.red;
+				
+				break;
+
+			default:
+				break;
+			}
+			
+			Log.d(MainActivity.RCF, "line length string: " + linelengthString + 
+					" color: " + color);
+			
+			if ((color != 0) && (linelengthString != 0)) {
+				lineLengthButton.setBackgroundColor(getResources().getColor(color));
+				lineLengthButton.setText(linelengthString);
+			}
+		}
+	}
+	
+	class InsertLineLengthTask extends AsyncTask<LineLength, Void, LineLength> {
+
+		@Override
+		protected LineLength doInBackground(LineLength... params) {
+			LineLength returnLineLength = null;
+			try {
+				returnLineLength = mService.linelength().insert(params[0]).execute();
+			} catch (IOException e) {
+				Log.e(MainActivity.RCF, "Error inserting line length");
+			}
+			return returnLineLength;
+		}
+		
+		@Override
+		protected void onPostExecute(LineLength result) {
+			if (result == null) {
+				Log.e(MainActivity.RCF, "Error in insert, returned value is null");
+			}
+			
+			updateLineStatus();
 		}
 		
 	}

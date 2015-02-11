@@ -19,7 +19,7 @@
 package com.appspot.rose_hulman_career_fair.careerfair.model;
 
 /**
- * Model definition for Company.
+ * Model definition for LineLengthCollection.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the careerfair. For a detailed explanation see:
@@ -29,100 +29,64 @@ package com.appspot.rose_hulman_career_fair.careerfair.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class Company extends com.google.api.client.json.GenericJson {
+public final class LineLengthCollection extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String bio;
+  private java.util.List<LineLength> items;
+
+  static {
+    // hack to force ProGuard to consider LineLength used, since otherwise it would be stripped out
+    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
+    com.google.api.client.util.Data.nullOf(LineLength.class);
+  }
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String entityKey;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String logo;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String name;
+  private java.lang.String nextPageToken;
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getBio() {
-    return bio;
+  public java.util.List<LineLength> getItems() {
+    return items;
   }
 
   /**
-   * @param bio bio or {@code null} for none
+   * @param items items or {@code null} for none
    */
-  public Company setBio(java.lang.String bio) {
-    this.bio = bio;
+  public LineLengthCollection setItems(java.util.List<LineLength> items) {
+    this.items = items;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getEntityKey() {
-    return entityKey;
+  public java.lang.String getNextPageToken() {
+    return nextPageToken;
   }
 
   /**
-   * @param entityKey entityKey or {@code null} for none
+   * @param nextPageToken nextPageToken or {@code null} for none
    */
-  public Company setEntityKey(java.lang.String entityKey) {
-    this.entityKey = entityKey;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getLogo() {
-    return logo;
-  }
-
-  /**
-   * @param logo logo or {@code null} for none
-   */
-  public Company setLogo(java.lang.String logo) {
-    this.logo = logo;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getName() {
-    return name;
-  }
-
-  /**
-   * @param name name or {@code null} for none
-   */
-  public Company setName(java.lang.String name) {
-    this.name = name;
+  public LineLengthCollection setNextPageToken(java.lang.String nextPageToken) {
+    this.nextPageToken = nextPageToken;
     return this;
   }
 
   @Override
-  public Company set(String fieldName, Object value) {
-    return (Company) super.set(fieldName, value);
+  public LineLengthCollection set(String fieldName, Object value) {
+    return (LineLengthCollection) super.set(fieldName, value);
   }
 
   @Override
-  public Company clone() {
-    return (Company) super.clone();
+  public LineLengthCollection clone() {
+    return (LineLengthCollection) super.clone();
   }
 
 }

@@ -43,5 +43,9 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="loading">Loading...</string>
+    <string name="short_line">Short Line</string>
+    <string name="medium_line">Medium Line</string>
+    <string name="long_line">Long Line</string>
+    <string name="unknown">Unknown</string>
     
 </resources>

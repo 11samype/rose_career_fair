@@ -61,6 +61,8 @@ public class SearchActivity extends ListActivity {
 		companyIntent.putExtra(KEY_COMPANY_NAME, currentCompany.getName());
 		companyIntent.putExtra(KEY_COMPANY_BIO, currentCompany.getBio());
 		companyIntent.putExtra(KEY_COMPANY_LOGO, currentCompany.getLogo());
+		companyIntent.putExtra(KEY_COMPANY_ENTITY_KEY, currentCompany.getEntityKey());
+		
 		startActivity(companyIntent);
 		
 		super.onListItemClick(l, v, position, id);

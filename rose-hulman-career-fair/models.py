@@ -13,29 +13,30 @@ class Note(EndpointsModel):
     _message_fields_schema = ("entityKey", "note", "owner", "company_entity_key")
     note = ndb.StringProperty()
     owner = ndb.UserProperty()
-    company_entity_key = ndb.IntegerProperty()
+    company_entity_key = ndb.StringProperty()
     last_touch_date_time = ndb.DateTimeProperty(auto_now=True)
     
 class LineLength(EndpointsModel):
     _message_fields_schema = ("entityKey", "length", "company_entity_key")
     length = ndb.IntegerProperty()
-    company_entity_key = ndb.IntegerProperty()
+    company_entity_key = ndb.StringProperty()
+    last_touch_date_time = ndb.DateTimeProperty(auto_now=True)
     
 class Interview(EndpointsModel):
     _message_fields_schema = ("entityKey", "date_time", "owner", "company_entity_key")
     date_time = ndb.DateTimeProperty()
     owner = ndb.UserProperty()
-    company_entity_key = ndb.IntegerProperty()
+    company_entity_key = ndb.StringProperty()
     last_touch_date_time = ndb.DateTimeProperty(auto_now=True)
     
 class Job(EndpointsModel):
     _message_fields_schema = ("entityKey", "name", "company_entity_key")
     name = ndb.StringProperty()
-    company_entity_key = ndb.IntegerProperty()
+    company_entity_key = ndb.StringProperty()
     last_touch_date_time = ndb.DateTimeProperty(auto_now=True)
     
 class Major(EndpointsModel):
     _message_fields_schema = ("entityKey", "name", "company_entity_key")
     name = ndb.StringProperty()
-    company_entity_key = ndb.IntegerProperty()
+    company_entity_key = ndb.StringProperty()
     last_touch_date_time = ndb.DateTimeProperty(auto_now=True)
