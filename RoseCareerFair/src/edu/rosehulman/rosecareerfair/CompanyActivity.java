@@ -49,10 +49,10 @@ public class CompanyActivity extends Activity {
 		
 		Bundle extras = intent.getExtras();
 		mCompany = new Company();
-		mCompany.setName(extras.getString(SearchActivity.KEY_COMPANY_NAME));
-		mCompany.setBio(extras.getString(SearchActivity.KEY_COMPANY_BIO));
-		mCompany.setLogo(extras.getString(SearchActivity.KEY_COMPANY_LOGO));
-		mCompany.setEntityKey(extras.getString(SearchActivity.KEY_COMPANY_ENTITY_KEY));
+		mCompany.setName(extras.getString(MainActivity.KEY_COMPANY_NAME));
+		mCompany.setBio(extras.getString(MainActivity.KEY_COMPANY_BIO));
+		mCompany.setLogo(extras.getString(MainActivity.KEY_COMPANY_LOGO));
+		mCompany.setEntityKey(extras.getString(MainActivity.KEY_COMPANY_ENTITY_KEY));
 		
 		Log.d(MainActivity.RCF, mCompany.getLogo());
 		

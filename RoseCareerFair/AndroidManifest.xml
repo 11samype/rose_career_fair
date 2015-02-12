@@ -25,10 +25,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SearchActivity"
-            android:label="@string/title_activity_search" >
-        </activity>
-        <activity
             android:name=".MapActivity"
             android:label="@string/title_activity_map" >
         </activity>
