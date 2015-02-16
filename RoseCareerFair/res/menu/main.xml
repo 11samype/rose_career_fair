@@ -15,6 +15,7 @@
     <item
         android:id="@+id/login"
         android:title="@string/log_in"
+        android:icon="@drawable/ic_menu_add_account"
         android:showAsAction="always" />
 
 </menu>

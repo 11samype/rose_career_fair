@@ -22,7 +22,7 @@
     <string name="interview_time">Interview Time</string>
     <string name="notes">Notes</string>
     <string name="schedule_interview">Schedule Interview</string>
-	<string name="interview">Interview</string>
+    <string name="interview">Interview</string>
     <string name="title_activity_login">Login</string>
     <string name="username">username</string>
     <string name="password">password</string>
@@ -30,7 +30,7 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="info">Info</string>
     <string name="favorites">Favorites</string>
-    <string name="sign_out">Sign Out</string>
+    <string name="interviews">Show Interviews</string>
     <string name="company_logo">Company Logo</string>
     <string name="submit_wait_time">Submit Wait Time</string>
     <string name="wait_time">Wait Time</string>
@@ -47,5 +47,6 @@
     <string name="medium_line">Medium Line</string>
     <string name="long_line">Long Line</string>
     <string name="unknown">Unknown</string>
-    
+    <string name="title_activity_interviews">InterviewsActivity</string>
+
 </resources>
