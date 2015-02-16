@@ -23,6 +23,9 @@ PARENT_KEY = ndb.Key("Entity", 'graderecorder_root')
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Hello world!')
+        
+def get_parent_key(user):
+    return ndb.Key("Entity", user.email().lower())
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)

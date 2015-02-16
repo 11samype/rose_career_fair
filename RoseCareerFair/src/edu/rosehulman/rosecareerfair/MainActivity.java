@@ -1,6 +1,7 @@
 package edu.rosehulman.rosecareerfair;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.appspot.rose_hulman_career_fair.careerfair.Careerfair;
@@ -32,6 +33,8 @@ public class MainActivity extends ListActivity {
 	public static final String KEY_COMPANY_NAME = "KEY_COMPANY_NAME";
 	public static final String KEY_COMPANY_BIO = "KEY_COMPANY_BIO";
 	public static final String KEY_COMPANY_LOGO = "KEY_COMPANY_LOGO";
+	public static final String KEY_COMPANY_MAJORS = "KEY_COMPANY_MAJORS";
+	public static final String KEY_COMPANY_JOBS = "KEY_COMPANY_JOBS";
 	public Careerfair mService;
 	
 	@Override
@@ -63,11 +66,13 @@ public class MainActivity extends ListActivity {
 		final com.appspot.rose_hulman_career_fair.careerfair.model.Company currentCompany = (com.appspot.rose_hulman_career_fair.careerfair.model.Company) getListAdapter().getItem(position);
 		
 		Intent companyIntent = new Intent(getApplicationContext(), CompanyActivity.class);
-//		companyIntent.putExtra(KEY_COMPANY, new Company1());
+
 		companyIntent.putExtra(KEY_COMPANY_NAME, currentCompany.getName());
 		companyIntent.putExtra(KEY_COMPANY_BIO, currentCompany.getBio());
 		companyIntent.putExtra(KEY_COMPANY_LOGO, currentCompany.getLogo());
 		companyIntent.putExtra(KEY_COMPANY_ENTITY_KEY, currentCompany.getEntityKey());
+		companyIntent.putExtra(KEY_COMPANY_MAJORS, (ArrayList<String>)currentCompany.getMajors());
+		companyIntent.putExtra(KEY_COMPANY_JOBS, (ArrayList<String>)currentCompany.getJobs());
 		
 		startActivity(companyIntent);
 		
@@ -106,11 +111,6 @@ public class MainActivity extends ListActivity {
 			startActivity(profileIntent);
 			
 			return true;
-			
-		case R.id.login:
-			
-			Intent loginIntent = new Intent(this, LoginActivity.class);
-			startActivity(loginIntent);
 
 		}
 		
