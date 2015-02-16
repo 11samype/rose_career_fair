@@ -12,9 +12,5 @@
         android:title="@string/profile"
         android:showAsAction="always" />
     
-    <item
-        android:id="@+id/login"
-        android:title="@string/log_in"
-        android:showAsAction="always" />
 
 </menu>

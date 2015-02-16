@@ -66,18 +66,20 @@ class CareerFairApi(protorpc.remote.Service):
                     http_method="GET", request_fields=("company_entity_key",))
     
     def linelength_status(self, request):
-        query = LineLength.query().filter(LineLength.company_entity_key == request.company_entity_key)
+        query = LineLength.query().filter(LineLength.company_entity_key == request.company_entity_key).order(LineLength.last_touch_date_time)
         
         count = 0
         sumLength = 0
         for linelength in query:
             sumLength += linelength.length
             count += 1
+            if count == 3:
+                break
         
         if count < 1:
             return LineLength(length=0)
         
         length = int(round(sumLength/count))
         return LineLength(length=length)
-    
+
 app = endpoints.api_server([CareerFairApi], restricted=False)

@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import com.appspot.rose_hulman_career_fair.careerfair.Careerfair;
 import com.appspot.rose_hulman_career_fair.careerfair.Careerfair.Linelength;
@@ -53,6 +55,8 @@ public class CompanyActivity extends Activity {
 		mCompany.setBio(extras.getString(MainActivity.KEY_COMPANY_BIO));
 		mCompany.setLogo(extras.getString(MainActivity.KEY_COMPANY_LOGO));
 		mCompany.setEntityKey(extras.getString(MainActivity.KEY_COMPANY_ENTITY_KEY));
+		mCompany.setMajors(extras.getStringArrayList(MainActivity.KEY_COMPANY_MAJORS));
+		mCompany.setJobs(extras.getStringArrayList(MainActivity.KEY_COMPANY_JOBS));
 		
 		Log.d(MainActivity.RCF, mCompany.getLogo());
 		
@@ -188,8 +192,46 @@ public class CompanyActivity extends Activity {
 			}
 		});
 		
+		TextView workTypeTextView = (TextView)findViewById(R.id.company_work_type_text);
+		
+		workTypeTextView.setText(getWorkTypeText());
+		
+		TextView majorTextView = (TextView)findViewById(R.id.company_major_list_text);
+		
+		majorTextView.setText(getMajorText());
+		
+		
 	}
 	
+	private String getMajorText() {
+		
+		List<String> majors = mCompany.getMajors();
+		
+		String majorString = "";
+		
+		for (String major : majors) {
+			Log.d(MainActivity.RCF, major);
+			majorString += (" " + major + ",");
+			
+		}
+		
+		return majorString.substring(0, majorString.length() - 1);
+	}
+
+	private String getWorkTypeText() {
+		List<String> jobs = mCompany.getJobs();
+		
+		String jobString = "";
+		
+		for (String job : jobs) {
+			Log.d(MainActivity.RCF, job);
+			jobString += (job + " \n");
+			
+		}
+		
+		return jobString.substring(0, jobString.length() - 1);
+	}
+
 	private void updateLineStatus() {
 		(new QueryForLineLengthTask()).execute();
 		
