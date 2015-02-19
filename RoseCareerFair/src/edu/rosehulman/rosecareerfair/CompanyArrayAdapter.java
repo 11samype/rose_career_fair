@@ -11,8 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class CompanyArrayAdapter extends ArrayAdapter<Company>{
+	
+	private ToggleButton mFavoriteButton;
 	
 	public CompanyArrayAdapter(Context context, int resource, int textViewResourceId, List<Company> companies) {
 		super(context, resource, textViewResourceId, companies);
@@ -23,16 +26,24 @@ public class CompanyArrayAdapter extends ArrayAdapter<Company>{
 		View view = super.getView(position, convertView, parent);
 		TextView companyTextView = (TextView) view.findViewById(android.R.id.text1);
 		companyTextView.setText(getItem(position).getName());
-//		Button favoriteButton = (Button) view.findViewById(android.R.id.button1);
-		//favoriteButton.setBackgroundColor(R.color.red);
-//		favoriteButton.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		});
+		mFavoriteButton = (ToggleButton) view.findViewById(android.R.id.button1);
+		mFavoriteButton.setBackgroundColor(view.getResources().getColor(R.color.gray));
+		mFavoriteButton.setChecked(false);
+		mFavoriteButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(mFavoriteButton.isChecked()){
+					mFavoriteButton.setBackgroundColor(v.getResources().getColor(R.color.gray));
+					mFavoriteButton.setChecked(false);
+				}
+				else{
+					mFavoriteButton.setBackgroundColor(v.getResources().getColor(R.color.red));
+					mFavoriteButton.setChecked(true);
+				}
+				
+			}
+		});
 		return view;
 	}
 }
