@@ -10,7 +10,12 @@ from models import Company#, Note, Interview, LineLength, Job, Major
 import main
 from models import LineLength
 
-@endpoints.api(name="careerfair", version="v2", description="Career Fair API")
+WEB_CLIENT_ID = "226229190503-97pgt09qc8tr0g368pa6fpf0kjsof3pm.apps.googleusercontent.com"
+ANDROID_CLIENT_ID = "226229190503-7b5arfm067fj9gb8sv3mabto3ge9ldbc.apps.googleusercontent.com"
+
+@endpoints.api(name="careerfair", version="v2", description="Career Fair API",
+               audiences=[WEB_CLIENT_ID],
+               allowed_client_ids=[endpoints.API_EXPLORER_CLIENT_ID, WEB_CLIENT_ID, ANDROID_CLIENT_ID])
 class CareerFairApi(protorpc.remote.Service):
     
     @Company.method(path="company/insert", name="company.insert", http_method="POST")
@@ -66,14 +71,15 @@ class CareerFairApi(protorpc.remote.Service):
                     http_method="GET", request_fields=("company_entity_key",))
     
     def linelength_status(self, request):
-        query = LineLength.query().filter(LineLength.company_entity_key == request.company_entity_key).order(LineLength.last_touch_date_time)
+        query = LineLength.query().filter(LineLength.company_entity_key == request.company_entity_key).order(-LineLength.last_touch_date_time)
         
         count = 0
         sumLength = 0
         for linelength in query:
+            
             sumLength += linelength.length
             count += 1
-            if count == 3:
+            if count > 2:
                 break
         
         if count < 1:

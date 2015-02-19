@@ -14,3 +14,9 @@ indexes:
   properties:
   - name: company_entity_key
   - name: last_touch_date_time
+
+- kind: LineLength
+  properties:
+  - name: company_entity_key
+  - name: last_touch_date_time
+    direction: desc

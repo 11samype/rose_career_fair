@@ -23,16 +23,16 @@ public class CompanyArrayAdapter extends ArrayAdapter<Company>{
 		View view = super.getView(position, convertView, parent);
 		TextView companyTextView = (TextView) view.findViewById(android.R.id.text1);
 		companyTextView.setText(getItem(position).getName());
-		Button favoriteButton = (Button) view.findViewById(android.R.id.button1);
+//		Button favoriteButton = (Button) view.findViewById(android.R.id.button1);
 		//favoriteButton.setBackgroundColor(R.color.red);
-		favoriteButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+//		favoriteButton.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
 		return view;
 	}
 }

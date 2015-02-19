@@ -8,14 +8,17 @@ import com.appspot.rose_hulman_career_fair.careerfair.Careerfair;
 import com.appspot.rose_hulman_career_fair.careerfair.Careerfair.Company;
 import com.appspot.rose_hulman_career_fair.careerfair.model.CompanyCollection;
 import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.json.gson.GsonFactory;
 
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +30,7 @@ import android.widget.ListView;
 
 public class MainActivity extends ListActivity {
 
+	static final int REQUEST_ACCOUNT_PICKER = 1;
 	public static final String RCF = "RCF";
 	public static final String KEY_COMPANY = "KEY_COMPANY";
 	public static final String KEY_COMPANY_ENTITY_KEY = "KEY_COMPANY_ENTITY_KEY";
@@ -35,16 +39,34 @@ public class MainActivity extends ListActivity {
 	public static final String KEY_COMPANY_LOGO = "KEY_COMPANY_LOGO";
 	public static final String KEY_COMPANY_MAJORS = "KEY_COMPANY_MAJORS";
 	public static final String KEY_COMPANY_JOBS = "KEY_COMPANY_JOBS";
-	public Careerfair mService;
+	public static Careerfair mService;
+	
+	public static final String SHARED_PREFERENCES_NAME = "RoseCareerFair";
+	public static final String PREF_ACCOUNT_NAME = "PREF_ACCOUNT_NAME";
+	
+	GoogleAccountCredential mCredential;
+	
+	SharedPreferences mSettings = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		mCredential = GoogleAccountCredential.usingAudience(this, 
+				"server:client_id:226229190503-97pgt09qc8tr0g368pa6fpf0kjsof3pm.apps.googleusercontent.com");
+		
+		mSettings = getSharedPreferences(SHARED_PREFERENCES_NAME, 0);
+		setAccountName(mSettings.getString(PREF_ACCOUNT_NAME, null));
+		
 		Careerfair.Builder builder = new Careerfair.Builder(AndroidHttp.newCompatibleTransport(),
-				new GsonFactory(), null);
+				new GsonFactory(), mCredential);
 		mService = builder.build();
+		
+		if (mCredential.getSelectedAccountName() == null) {
+			// Not signed in, show login window or request an existing account.
+			chooseAccount();
+		}
 		
 		updateCompanies();
 	}
@@ -53,10 +75,42 @@ public class MainActivity extends ListActivity {
 		(new QueryForCompaniesTask()).execute();
 		
 	}
+	
+	void chooseAccount() {
+		// This picker is built in to the Android framework.
+		startActivityForResult(mCredential.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER);
+	}
+	
+	/**
+	 * Save the account name in preferences and the credentials
+	 * 
+	 * @param accountName
+	 */
+	private void setAccountName(String accountName) {
+		SharedPreferences.Editor editor = mSettings.edit();
+		editor.putString(PREF_ACCOUNT_NAME, accountName);
+		editor.commit();
+		mCredential.setSelectedAccountName(accountName);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		case REQUEST_ACCOUNT_PICKER:
+			if (data != null && data.getExtras() != null) {
+				String accountName = data.getExtras().getString(AccountManager.KEY_ACCOUNT_NAME);
+				if (accountName != null) {
+					setAccountName(accountName); // User is authorized.
+					updateCompanies();
+				}
+			}
+			break;
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-//		getMenuInflater().inflate(R.menu.company_search, menu);
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
@@ -124,6 +178,7 @@ public class MainActivity extends ListActivity {
 			
 			CompanyCollection companies = null;
 			try {
+				Log.d(RCF, "Using account name = " + mCredential.getSelectedAccountName());
 				Company.List query = mService.company().list();
 				query.setLimit(50L); // pages?
 				query.setOrder("name");
@@ -140,7 +195,13 @@ public class MainActivity extends ListActivity {
 			super.onPostExecute(result);
 			if (result == null) {
 				Log.e(RCF, "Error in loading, companies is null");
+				return;
 			}
+			
+			if (result.getItems() == null) {
+				result.setItems(new ArrayList<com.appspot.rose_hulman_career_fair.careerfair.model.Company>());
+			}
+			
 			List<com.appspot.rose_hulman_career_fair.careerfair.model.Company> companies = result.getItems();
 			CompanyArrayAdapter adapter = new CompanyArrayAdapter(MainActivity.this,
 					android.R.layout.simple_expandable_list_item_1, android.R.id.text1, companies);
