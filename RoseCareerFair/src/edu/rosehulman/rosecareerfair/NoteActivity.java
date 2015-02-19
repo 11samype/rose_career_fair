@@ -1,11 +1,18 @@
 package edu.rosehulman.rosecareerfair;
 
+import java.util.Calendar;
+
+import com.appspot.rose_hulman_career_fair.careerfair.model.Company;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.provider.CalendarContract.Events;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,15 +22,27 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class NoteActivity extends Activity {
 
 	boolean scheduled;
-	
+	private Company mCompany;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_note);
+		
+		Intent intent = getIntent();
+		
+		Bundle extras = intent.getExtras();
+		mCompany = new Company();
+		mCompany.setName(extras.getString(MainActivity.KEY_COMPANY_NAME));
+		mCompany.setBio(extras.getString(MainActivity.KEY_COMPANY_BIO));
+		mCompany.setLogo(extras.getString(MainActivity.KEY_COMPANY_LOGO));
+		mCompany.setEntityKey(extras.getString(MainActivity.KEY_COMPANY_ENTITY_KEY));
+		mCompany.setMajors(extras.getStringArrayList(MainActivity.KEY_COMPANY_MAJORS));
+		mCompany.setJobs(extras.getStringArrayList(MainActivity.KEY_COMPANY_JOBS));
 		
 		scheduled = false;
 		
@@ -65,22 +84,32 @@ public class NoteActivity extends Activity {
 								if (minute < 10) {
 									leadingZero = "0";
 								}
-								
-								interviewText.setText("" + (month + 1) + "/"+ dayOfMonth + "/" + year + " " + hour + ":" + leadingZero + minute);
-								interviewButton.setText(R.string.edit);
+								Calendar beginTime = Calendar.getInstance();
+						    	beginTime.set(year, month, dayOfMonth, hour, minute);
+						        Intent intent = new Intent(Intent.ACTION_INSERT);
+						        intent.setType("vnd.android.cursor.item/event");
+						        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
+						        intent.putExtra(Events.TITLE, mCompany.getName() + " Interview");
+						        intent.putExtra(Events.DESCRIPTION, "Interview");
+
+						        // Use the Calendar app to view the time.
+						        startActivity(intent);
+						        Toast.makeText(getApplicationContext(), "Interview made", Toast.LENGTH_LONG).show();
+//								interviewText.setText("" + (month + 1) + "/"+ dayOfMonth + "/" + year + " " + hour + ":" + leadingZero + minute);
+//								interviewButton.setText(R.string.edit);
 							}
 						});
 						
-						builder.setNegativeButton(R.string.delete, new DialogInterface.OnClickListener() {
-							
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								// Remove interview
-								interviewButton.setText(R.string.schedule_interview);
-								interviewText.setText("");
-								
-							}
-						});
+//						builder.setNegativeButton(R.string.delete, new DialogInterface.OnClickListener() {
+//							
+//							@Override
+//							public void onClick(DialogInterface dialog, int which) {
+//								// Remove interview
+//								interviewButton.setText(R.string.schedule_interview);
+//								interviewText.setText("");
+//								
+//							}
+//						});
 						
 						builder.setNeutralButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
 							
