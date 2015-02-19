@@ -12,5 +12,10 @@
         android:title="@string/profile"
         android:showAsAction="always" />
     
+    <item
+        android:id="@+id/account"
+        android:title="@string/account"
+        android:showAsAction="always" />
+    
 
 </menu>

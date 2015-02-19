@@ -27,7 +27,7 @@ public class CompanyArrayAdapter extends ArrayAdapter<Company>{
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = super.getView(position, convertView, parent);
 		TextView companyTextView = (TextView) view.findViewById(android.R.id.text1);
-		companyTextView.setBackgroundColor(mContext.getResources().getColor(R.color.gray));
+//		companyTextView.setBackgroundColor(mContext.getResources().getColor(R.color.gray));
 		companyTextView.setText(getItem(position).getName());
 //		mFavoriteButton = (ToggleButton) mView.findViewById(android.R.id.button1);
 //		mFavoriteButton.setBackgroundColor(mView.getResources().getColor(R.color.gray));

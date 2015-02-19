@@ -48,5 +48,6 @@
     <string name="long_line">Long Line</string>
     <string name="unknown">Unknown</string>
     <string name="title_activity_interviews">InterviewsActivity</string>
+    <string name="account">Account</string>
 
 </resources>

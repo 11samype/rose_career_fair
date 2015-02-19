@@ -183,6 +183,12 @@ public class MainActivity extends ListActivity {
 			startActivity(profileIntent);
 			
 			return true;
+			
+		case R.id.account:
+			
+			chooseAccount();
+			
+			return true;
 
 		}
 		
