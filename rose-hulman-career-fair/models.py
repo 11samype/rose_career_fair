@@ -12,16 +12,15 @@ class Company(EndpointsModel):
     last_touch_date_time = ndb.DateTimeProperty(auto_now=True)
     
 class Note(EndpointsModel):
-    _message_fields_schema = ("entityKey", "note", "owner", "company_entity_key")
+    _message_fields_schema = ("entityKey", "note", "company_entity_key")
     note = ndb.StringProperty()
-    owner = ndb.UserProperty()
-    company_entity_key = ndb.KeyProperty()
+    company_entity_key = ndb.KeyProperty(kind=Company)
     last_touch_date_time = ndb.DateTimeProperty(auto_now=True)
     
 class LineLength(EndpointsModel):
     _message_fields_schema = ("entityKey", "length", "company_entity_key")
     length = ndb.IntegerProperty()
-    company_entity_key = ndb.KeyProperty()
+    company_entity_key = ndb.KeyProperty(kind=Company)
     last_touch_date_time = ndb.DateTimeProperty(auto_now=True)
     
 class Interview(EndpointsModel):

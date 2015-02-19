@@ -18,7 +18,7 @@ import webapp2
 
 from google.appengine.ext import ndb
 
-PARENT_KEY = ndb.Key("Entity", 'graderecorder_root')
+PARENT_KEY = ndb.Key("Entity", 'careerfair_root')
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):

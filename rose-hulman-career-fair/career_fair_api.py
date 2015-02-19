@@ -6,9 +6,8 @@ Created on Feb 9, 2015
 
 import endpoints
 import protorpc
-from models import Company#, Note, Interview, LineLength, Job, Major
+from models import Company, Note, Interview, LineLength, Job, Major
 import main
-from models import LineLength
 
 WEB_CLIENT_ID = "226229190503-97pgt09qc8tr0g368pa6fpf0kjsof3pm.apps.googleusercontent.com"
 ANDROID_CLIENT_ID = "226229190503-7b5arfm067fj9gb8sv3mabto3ge9ldbc.apps.googleusercontent.com"
@@ -48,7 +47,7 @@ class CareerFairApi(protorpc.remote.Service):
         if request.from_datastore:
             my_linelength = request
         else:
-            my_linelength = LineLength(parent=main.PARENT_KEY, length=request.length, company_entity_key=request.company_entity_key)
+            my_linelength = LineLength(length=request.length, company_entity_key=request.company_entity_key)
         
         my_linelength.put()
         return my_linelength
@@ -87,5 +86,29 @@ class CareerFairApi(protorpc.remote.Service):
         
         length = int(round(sumLength/count))
         return LineLength(length=length)
+    
+    @Note.method(user_required=True, name="note.company", path="note/company/{company_entity_key}", http_method="GET", 
+                       request_fields=("company_entity_key",))
+    def note_for_company(self, request):
+        user = endpoints.get_current_user()
+        query = Note.query(ancestor=main.get_parent_key(user)).filter(Note.company_entity_key == request.company_entity_key)
+        
+        for note in query:
+            returnNote = note
+            break
+        
+        return returnNote
+     
+    @Note.method(user_required=True, name="note.insert", path="note/insert", http_method="POST")
+     
+    def note_insert(self, note):
+        if note.from_datastore:
+            note_with_parent = note
+        else:
+            note_with_parent = Note(parent=main.get_parent_key(endpoints.get_current_user()),
+                                    note = note.note, company_entity_key = note.company_entity_key)
+             
+        note_with_parent.put()
+        return note_with_parent
 
 app = endpoints.api_server([CareerFairApi], restricted=False)
