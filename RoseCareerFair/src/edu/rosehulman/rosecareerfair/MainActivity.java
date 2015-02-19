@@ -26,7 +26,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnLongClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends ListActivity {
 
@@ -69,6 +73,18 @@ public class MainActivity extends ListActivity {
 		}
 		
 		updateCompanies();
+		
+	}
+	
+	private class MyOnLongItemClickListener implements ListView.OnItemLongClickListener{
+
+		@Override
+		public boolean onItemLongClick(AdapterView<?> list, View view,
+				int position, long id) {
+			view.setBackgroundColor(getResources().getColor(R.color.red));
+			return false;
+		}
+		
 	}
 	
 	private void updateCompanies() {
@@ -115,6 +131,7 @@ public class MainActivity extends ListActivity {
 		return true;
 	}
 	
+	
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		final com.appspot.rose_hulman_career_fair.careerfair.model.Company currentCompany = (com.appspot.rose_hulman_career_fair.careerfair.model.Company) getListAdapter().getItem(position);
@@ -132,6 +149,7 @@ public class MainActivity extends ListActivity {
 		
 		super.onListItemClick(l, v, position, id);
 	}
+	
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -209,4 +227,5 @@ public class MainActivity extends ListActivity {
 		}
 		
 	}
+
 }
