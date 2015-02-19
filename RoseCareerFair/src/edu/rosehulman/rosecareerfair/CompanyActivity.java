@@ -39,7 +39,6 @@ import android.widget.TextView;
 public class CompanyActivity extends Activity {
 	
 	private Company mCompany;
-	private Careerfair mService;
 	private LineLength mLinelength;
 	
 	@Override
@@ -59,10 +58,6 @@ public class CompanyActivity extends Activity {
 		mCompany.setJobs(extras.getStringArrayList(MainActivity.KEY_COMPANY_JOBS));
 		
 		Log.d(MainActivity.RCF, mCompany.getLogo());
-		
-		Careerfair.Builder builder = new Careerfair.Builder(AndroidHttp.newCompatibleTransport(),
-				new GsonFactory(), null);
-		mService = builder.build();
 		
 		ImageView companyLogo = (ImageView) findViewById(R.id.company_logo);
 		new ImageLoadTask(mCompany.getLogo(), companyLogo).execute();
@@ -286,7 +281,7 @@ public class CompanyActivity extends Activity {
 			Log.d(MainActivity.RCF, "executed: " + mCompany.getEntityKey());
 			
 			try {
-				returnedValue = mService.linelength().status(mCompany.getEntityKey()).execute();
+				returnedValue = MainActivity.mService.linelength().status(mCompany.getEntityKey()).execute();
 			} catch (IOException e) {
 				Log.e(MainActivity.RCF, "Error in loading, linelength is null: " + e);
 			}
@@ -365,7 +360,7 @@ public class CompanyActivity extends Activity {
 		protected LineLength doInBackground(LineLength... params) {
 			LineLength returnLineLength = null;
 			try {
-				returnLineLength = mService.linelength().insert(params[0]).execute();
+				returnLineLength = MainActivity.mService.linelength().insert(params[0]).execute();
 			} catch (IOException e) {
 				Log.e(MainActivity.RCF, "Error inserting line length");
 			}

@@ -1,8 +1,11 @@
 package edu.rosehulman.rosecareerfair;
 
+import java.io.IOException;
 import java.util.Calendar;
 
+import com.appspot.rose_hulman_career_fair.careerfair.Careerfair;
 import com.appspot.rose_hulman_career_fair.careerfair.model.Company;
+import com.appspot.rose_hulman_career_fair.careerfair.model.Note;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,9 +13,11 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +25,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -28,6 +34,7 @@ public class NoteActivity extends Activity {
 
 	boolean scheduled;
 	private Company mCompany;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,10 +51,13 @@ public class NoteActivity extends Activity {
 		mCompany.setMajors(extras.getStringArrayList(MainActivity.KEY_COMPANY_MAJORS));
 		mCompany.setJobs(extras.getStringArrayList(MainActivity.KEY_COMPANY_JOBS));
 		
+		EditText editNote = (EditText)findViewById(R.id.notes);
+		
+		
+		
 		scheduled = false;
 		
 		final TextView interviewText = (TextView)findViewById(R.id.interview_time);
-		
 		
 		final Button interviewButton = (Button) findViewById(R.id.interview_button);
 		interviewButton.setOnClickListener(new OnClickListener() {
@@ -139,4 +149,23 @@ public class NoteActivity extends Activity {
 			}
 		});
 	}
+	
+//	class QueryForNoteTask extends AsyncTask<String, Void, Note> {
+//
+//		@Override
+//		protected Note doInBackground(String... params) {
+//			Note returnedValue = null;
+//			
+//			try {
+//				returnedValue = MainActivity.mService.note().company(mCompany.getEntityKey());
+//			} catch (IOException e) {
+//				Log.e(MainActivity.RCF, "Error in loading, note is null: " + e);
+//			}
+//			
+//			Log.d(MainActivity.RCF, "linelength: " + returnedValue.getNote());
+//			
+//			return returnedValue;
+//		}
+//		
+//	}
 }

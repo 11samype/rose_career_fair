@@ -19,7 +19,7 @@
 package com.appspot.rose_hulman_career_fair.careerfair.model;
 
 /**
- * Model definition for CompanyCollection.
+ * Model definition for Note.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the careerfair. For a detailed explanation see:
@@ -29,64 +29,79 @@ package com.appspot.rose_hulman_career_fair.careerfair.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class CompanyCollection extends com.google.api.client.json.GenericJson {
+public final class Note extends com.google.api.client.json.GenericJson {
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key("company_entity_key")
+  private java.lang.String companyEntityKey;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.util.List<Company> items;
-
-  static {
-    // hack to force ProGuard to consider Company used, since otherwise it would be stripped out
-    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
-    com.google.api.client.util.Data.nullOf(Company.class);
-  }
+  private java.lang.String entityKey;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String nextPageToken;
+  private java.lang.String note;
 
   /**
    * @return value or {@code null} for none
    */
-  public java.util.List<Company> getItems() {
-    return items;
+  public java.lang.String getCompanyEntityKey() {
+    return companyEntityKey;
   }
 
   /**
-   * @param items items or {@code null} for none
+   * @param companyEntityKey companyEntityKey or {@code null} for none
    */
-  public CompanyCollection setItems(java.util.List<Company> items) {
-    this.items = items;
+  public Note setCompanyEntityKey(java.lang.String companyEntityKey) {
+    this.companyEntityKey = companyEntityKey;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getNextPageToken() {
-    return nextPageToken;
+  public java.lang.String getEntityKey() {
+    return entityKey;
   }
 
   /**
-   * @param nextPageToken nextPageToken or {@code null} for none
+   * @param entityKey entityKey or {@code null} for none
    */
-  public CompanyCollection setNextPageToken(java.lang.String nextPageToken) {
-    this.nextPageToken = nextPageToken;
+  public Note setEntityKey(java.lang.String entityKey) {
+    this.entityKey = entityKey;
+    return this;
+  }
+
+  /**
+   * @return value or {@code null} for none
+   */
+  public java.lang.String getNote() {
+    return note;
+  }
+
+  /**
+   * @param note note or {@code null} for none
+   */
+  public Note setNote(java.lang.String note) {
+    this.note = note;
     return this;
   }
 
   @Override
-  public CompanyCollection set(String fieldName, Object value) {
-    return (CompanyCollection) super.set(fieldName, value);
+  public Note set(String fieldName, Object value) {
+    return (Note) super.set(fieldName, value);
   }
 
   @Override
-  public CompanyCollection clone() {
-    return (CompanyCollection) super.clone();
+  public Note clone() {
+    return (Note) super.clone();
   }
 
 }
