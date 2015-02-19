@@ -156,6 +156,12 @@ public class CompanyActivity extends Activity {
 			public void onClick(View v) {
 				
 				Intent noteIntent = new Intent(getApplicationContext(), NoteActivity.class);
+				noteIntent.putExtra(MainActivity.KEY_COMPANY_NAME, mCompany.getName());
+				noteIntent.putExtra(MainActivity.KEY_COMPANY_BIO, mCompany.getBio());
+				noteIntent.putExtra(MainActivity.KEY_COMPANY_LOGO, mCompany.getLogo());
+				noteIntent.putExtra(MainActivity.KEY_COMPANY_ENTITY_KEY, mCompany.getEntityKey());
+				noteIntent.putExtra(MainActivity.KEY_COMPANY_MAJORS, (ArrayList<String>)mCompany.getMajors());
+				noteIntent.putExtra(MainActivity.KEY_COMPANY_JOBS, (ArrayList<String>)mCompany.getJobs());
 				startActivity(noteIntent);
 				
 			}
