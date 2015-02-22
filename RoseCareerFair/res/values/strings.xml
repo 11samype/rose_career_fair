@@ -52,5 +52,9 @@
     <string name="na">N/A</string>
     <string name="az">A-Z</string>
     <string name="za">Z-A</string>
+    <string name="table">Table</string>
+    <string name="table_start">Table N/A</string>
+    <string name="website">Website</string>
+    <string name="sort">Sort</string>
 
 </resources>

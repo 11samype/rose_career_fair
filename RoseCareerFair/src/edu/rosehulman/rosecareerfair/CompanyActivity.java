@@ -24,6 +24,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +34,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,6 +56,8 @@ public class CompanyActivity extends Activity {
 		mCompany.setBio(extras.getString(MainActivity.KEY_COMPANY_BIO));
 		mCompany.setLogo(extras.getString(MainActivity.KEY_COMPANY_LOGO));
 		mCompany.setEntityKey(extras.getString(MainActivity.KEY_COMPANY_ENTITY_KEY));
+		mCompany.setTable(extras.getLong(MainActivity.KEY_COMPANY_TABLE));
+		mCompany.setWebsite(extras.getString(MainActivity.KEY_COMPANY_WEBSITE));
 		mCompany.setMajors(extras.getStringArrayList(MainActivity.KEY_COMPANY_MAJORS));
 		mCompany.setJobs(extras.getStringArrayList(MainActivity.KEY_COMPANY_JOBS));
 		
@@ -195,6 +199,18 @@ public class CompanyActivity extends Activity {
 			}
 		});
 		
+		ImageButton internetButton = (ImageButton)findViewById(R.id.button_internet);
+		internetButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent internetIntent = new Intent(Intent.ACTION_VIEW);
+				internetIntent.setData(Uri.parse(mCompany.getWebsite()));
+				startActivity(internetIntent);
+				
+			}
+		});
+		
 		TextView workTypeTextView = (TextView)findViewById(R.id.company_work_type_text);
 		
 		workTypeTextView.setText(getWorkTypeText());
@@ -202,6 +218,10 @@ public class CompanyActivity extends Activity {
 		TextView majorTextView = (TextView)findViewById(R.id.company_major_list_text);
 		
 		majorTextView.setText(getMajorText());
+		
+		TextView roomTextView = (TextView)findViewById(R.id.company_table);
+		
+		roomTextView.setText("Table " + Integer.toString(mCompany.getTable().intValue()));
 		
 		
 	}
@@ -272,7 +292,8 @@ public class CompanyActivity extends Activity {
 					AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
 					LayoutInflater inflator = getActivity().getLayoutInflater();
 					builder.setView(inflator.inflate(R.layout.dialog_map, null));
-					builder.setTitle(getString(R.string.map));
+					builder.setTitle(getString(R.string.map) + ": " + mCompany.getName() + 
+							": " + getString(R.string.table) + " " + mCompany.getTable());
 					
 					return builder.create();
 				}

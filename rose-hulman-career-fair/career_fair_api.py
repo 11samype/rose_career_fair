@@ -3,12 +3,13 @@ Created on Feb 9, 2015
 
 @author: samynpd
 '''
-
+import logging
 import endpoints
 import protorpc
 from models import Company, Note, LineLength, Favorite
 import main
 from endpoints.users_id_token import get_current_user
+from google.appengine.ext.key_range import ndb
 
 WEB_CLIENT_ID = "226229190503-97pgt09qc8tr0g368pa6fpf0kjsof3pm.apps.googleusercontent.com"
 ANDROID_CLIENT_ID = "226229190503-7b5arfm067fj9gb8sv3mabto3ge9ldbc.apps.googleusercontent.com"
@@ -25,14 +26,68 @@ class CareerFairApi(protorpc.remote.Service):
             my_company = request
         else:
             my_company = Company(parent=main.PARENT_KEY, name=request.name, bio=request.bio, logo=request.logo,
-                                 jobs=request.jobs, majors=request.majors, table=request.table)
+                                 jobs=request.jobs, majors=request.majors, table=request.table, website=request.website)
             
         my_company.put()
         return my_company
     
+    @Company.method(user_required=True, path="company/favorite/insert", name="company.favorite.insert", http_method="POST")
+    def company_insert_favorite(self, request):
+        user = endpoints.get_current_user()
+        favBool = request.favorite
+        key = ndb.Key(urlsafe=request.entityKey)
+        
+        query_favorite = Favorite.query(ancestor=main.get_parent_key(user)).filter(Favorite.company_entity_key == key)
+        
+        my_favorite = Favorite(parent=main.get_parent_key(user), company_entity_key=key)
+        
+        found = False
+        
+        logging.info(favBool)
+        
+        for item in query_favorite:
+            logging.info("favorite logged")
+            my_favorite = item
+            found = True
+        
+        logging.info(my_favorite)
+        
+        if favBool:
+            
+            logging.info("favorite bool = True")
+            
+            if not found:
+                
+                logging.info("creating favorite")
+#                 my_favorite = Favorite(parent=main.get_parent_key(user), company_entity_key=key)
+                my_favorite.put()
+        else:
+            
+            if found:
+                logging.info("delete")
+                my_favorite.key.delete()
+            
+        return request
+    
     @Company.query_method(name="company.list", path="company/list", http_method="GET", 
                           query_fields=("limit", "order", "pageToken"))
     def company_list(self, query):
+        return query
+    
+    @Company.query_method(user_required=True, name="company.favorite.list", path="company/favorite/list", http_method="GET", 
+                          query_fields=("limit", "order", "pageToken"))
+    def company_list_favorite(self, query):
+        user = endpoints.get_current_user()
+        
+        for company in query:
+            company.favorite = False
+            
+            key = ndb.Key(urlsafe=company.entityKey)
+            favQuery = Favorite.query(ancestor=main.get_parent_key(user)).filter(Favorite.company_entity_key == key)
+            
+            for favorite in favQuery:
+                company.favorite = True
+           
         return query
     
     @Company.method(name="company.delete", path="company/delete/{entityKey}", 

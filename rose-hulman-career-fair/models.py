@@ -3,7 +3,7 @@ from google.appengine.ext import ndb
 from endpoints_proto_datastore.ndb.model import EndpointsModel
 
 class Company(EndpointsModel):
-    _message_fields_schema = ("entityKey", "name", "bio", "logo", "majors", "jobs", "favorite", "table")
+    _message_fields_schema = ("entityKey", "name", "bio", "logo", "majors", "jobs", "favorite", "table", "website")
     name = ndb.StringProperty()
     bio = ndb.TextProperty()
     logo = ndb.StringProperty()
@@ -11,6 +11,7 @@ class Company(EndpointsModel):
     jobs = ndb.StringProperty(repeated=True)
     favorite = ndb.BooleanProperty()
     table = ndb.IntegerProperty()
+    website = ndb.StringProperty()
     last_touch_date_time = ndb.DateTimeProperty(auto_now=True)
     
 class Note(EndpointsModel):

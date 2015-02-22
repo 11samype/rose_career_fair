@@ -19,7 +19,7 @@
 package com.appspot.rose_hulman_career_fair.careerfair.model;
 
 /**
- * Model definition for LineLength.
+ * Model definition for NoteCollection.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the careerfair. For a detailed explanation see:
@@ -29,79 +29,64 @@ package com.appspot.rose_hulman_career_fair.careerfair.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class LineLength extends com.google.api.client.json.GenericJson {
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key("company_entity_key")
-  private java.lang.String companyEntityKey;
+public final class NoteCollection extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String entityKey;
+  private java.util.List<Note> items;
+
+  static {
+    // hack to force ProGuard to consider Note used, since otherwise it would be stripped out
+    // see http://code.google.com/p/google-api-java-client/issues/detail?id=528
+    com.google.api.client.util.Data.nullOf(Note.class);
+  }
 
   /**
    * The value may be {@code null}.
    */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long length;
+  @com.google.api.client.util.Key
+  private java.lang.String nextPageToken;
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getCompanyEntityKey() {
-    return companyEntityKey;
+  public java.util.List<Note> getItems() {
+    return items;
   }
 
   /**
-   * @param companyEntityKey companyEntityKey or {@code null} for none
+   * @param items items or {@code null} for none
    */
-  public LineLength setCompanyEntityKey(java.lang.String companyEntityKey) {
-    this.companyEntityKey = companyEntityKey;
+  public NoteCollection setItems(java.util.List<Note> items) {
+    this.items = items;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getEntityKey() {
-    return entityKey;
+  public java.lang.String getNextPageToken() {
+    return nextPageToken;
   }
 
   /**
-   * @param entityKey entityKey or {@code null} for none
+   * @param nextPageToken nextPageToken or {@code null} for none
    */
-  public LineLength setEntityKey(java.lang.String entityKey) {
-    this.entityKey = entityKey;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.Long getLength() {
-    return length;
-  }
-
-  /**
-   * @param length length or {@code null} for none
-   */
-  public LineLength setLength(java.lang.Long length) {
-    this.length = length;
+  public NoteCollection setNextPageToken(java.lang.String nextPageToken) {
+    this.nextPageToken = nextPageToken;
     return this;
   }
 
   @Override
-  public LineLength set(String fieldName, Object value) {
-    return (LineLength) super.set(fieldName, value);
+  public NoteCollection set(String fieldName, Object value) {
+    return (NoteCollection) super.set(fieldName, value);
   }
 
   @Override
-  public LineLength clone() {
-    return (LineLength) super.clone();
+  public NoteCollection clone() {
+    return (NoteCollection) super.clone();
   }
 
 }

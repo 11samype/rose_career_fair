@@ -59,7 +59,7 @@ public class NoteActivity extends Activity {
 		
 		scheduled = false;
 		
-		final TextView interviewText = (TextView)findViewById(R.id.interview_time);
+//		final TextView interviewText = (TextView)findViewById(R.id.interview_time);
 		
 		final Button interviewButton = (Button) findViewById(R.id.interview_button);
 		interviewButton.setOnClickListener(new OnClickListener() {

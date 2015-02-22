@@ -43,6 +43,8 @@ public class MainActivity extends ListActivity {
 	public static final String KEY_COMPANY_LOGO = "KEY_COMPANY_LOGO";
 	public static final String KEY_COMPANY_MAJORS = "KEY_COMPANY_MAJORS";
 	public static final String KEY_COMPANY_JOBS = "KEY_COMPANY_JOBS";
+	public static final String KEY_COMPANY_TABLE = "KEY_COMPANY_TABLE";
+	public static final String KEY_COMPANY_WEBSITE = "KEY_COMPANY_WEBSITE";
 	public static Careerfair mService;
 	
 	public static final String SHARED_PREFERENCES_NAME = "RoseCareerFair";
@@ -70,7 +72,15 @@ public class MainActivity extends ListActivity {
 				
 				// TODO
 				
-				view.setBackgroundColor(getResources().getColor(R.color.light_sky_blue));
+//				view.setBackgroundColor(getResources().getColor(R.color.light_sky_blue));
+				
+				if (currentCompany.getFavorite() == true) {
+					currentCompany.setFavorite(false);
+				} else {
+					currentCompany.setFavorite(true);
+				}
+				
+				(new InsertCompanyFavoriteTask()).execute(currentCompany);
 				
 				return true;
 			}
@@ -149,6 +159,8 @@ public class MainActivity extends ListActivity {
 		companyIntent.putExtra(KEY_COMPANY_NAME, currentCompany.getName());
 		companyIntent.putExtra(KEY_COMPANY_BIO, currentCompany.getBio());
 		companyIntent.putExtra(KEY_COMPANY_LOGO, currentCompany.getLogo());
+		companyIntent.putExtra(KEY_COMPANY_TABLE, currentCompany.getTable());
+		companyIntent.putExtra(KEY_COMPANY_WEBSITE, currentCompany.getWebsite());
 		companyIntent.putExtra(KEY_COMPANY_ENTITY_KEY, currentCompany.getEntityKey());
 		companyIntent.putExtra(KEY_COMPANY_MAJORS, (ArrayList<String>)currentCompany.getMajors());
 		companyIntent.putExtra(KEY_COMPANY_JOBS, (ArrayList<String>)currentCompany.getJobs());
@@ -198,16 +210,18 @@ public class MainActivity extends ListActivity {
 			
 			return true;
 			
-		case R.id.main_sort:
+		case R.id.az:
+
+			mCompanyOrder = "name";
+
+			updateCompanies();
 			
-			if (mCompanyOrder == "name") {
-				mCompanyOrder = "-name";
-				item.setTitle(R.string.az);
-			} else {
-				mCompanyOrder = "name";
-				item.setTitle(R.string.za);
-				
-			}
+			return true;
+			
+		case R.id.za:
+			
+			mCompanyOrder = "-name";
+
 			updateCompanies();
 			
 			return true;
@@ -227,7 +241,7 @@ public class MainActivity extends ListActivity {
 			try {
 				Log.d(RCF, "Using account name = " + mCredential.getSelectedAccountName());
 				Log.d(RCF, "Order: " + mCompanyOrder);
-				Company.List query = mService.company().list();
+				Company.Favorite.List query = mService.company().favorite().list();
 				query.setLimit(50L); // pages?
 				query.setOrder(mCompanyOrder);
 				companies = query.execute();
@@ -254,6 +268,33 @@ public class MainActivity extends ListActivity {
 			CompanyArrayAdapter adapter = new CompanyArrayAdapter(MainActivity.this,
 					android.R.layout.simple_expandable_list_item_1, android.R.id.text1, companies);
 			setListAdapter(adapter);
+		}
+		
+	}
+	
+	class InsertCompanyFavoriteTask extends AsyncTask<com.appspot.rose_hulman_career_fair.careerfair.model.Company, Void, com.appspot.rose_hulman_career_fair.careerfair.model.Company> {
+
+		@Override
+		protected com.appspot.rose_hulman_career_fair.careerfair.model.Company doInBackground(com.appspot.rose_hulman_career_fair.careerfair.model.Company... items) {
+			com.appspot.rose_hulman_career_fair.careerfair.model.Company returnCompany = null;
+			try {
+				returnCompany = mService.company().favorite().insert(items[0]).execute();
+				return returnCompany;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return returnCompany;
+		}
+		
+		@Override
+		protected void onPostExecute(
+				com.appspot.rose_hulman_career_fair.careerfair.model.Company result) {
+			super.onPostExecute(result);
+			if (result == null) {
+				Log.d(MainActivity.RCF, "Error inserting assignment, result is null");
+				return;
+			}
+			updateCompanies();
 		}
 		
 	}

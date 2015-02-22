@@ -1,11 +1,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="edu.rosehulman.hellomenu.MainActivity" >
-
+    
     <item
         android:id="@+id/main_sort"
-        android:title="@string/za"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/sort">
+        <menu>
+            <group android:id="@+id/group" android:checkableBehavior="single">
+                <item 
+                    android:id="@+id/az" 
+                    android:title="@string/az"/>
+                <item 
+                    android:id="@+id/za" 
+                    android:title="@string/za"/>
+            </group>
+        </menu>
+    </item>
     
     <item
         android:id="@+id/main_map"

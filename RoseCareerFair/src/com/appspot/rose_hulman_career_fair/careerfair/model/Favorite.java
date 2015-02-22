@@ -19,7 +19,7 @@
 package com.appspot.rose_hulman_career_fair.careerfair.model;
 
 /**
- * Model definition for LineLength.
+ * Model definition for Favorite.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the careerfair. For a detailed explanation see:
@@ -29,7 +29,7 @@ package com.appspot.rose_hulman_career_fair.careerfair.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class LineLength extends com.google.api.client.json.GenericJson {
+public final class Favorite extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
@@ -46,8 +46,8 @@ public final class LineLength extends com.google.api.client.json.GenericJson {
   /**
    * The value may be {@code null}.
    */
-  @com.google.api.client.util.Key @com.google.api.client.json.JsonString
-  private java.lang.Long length;
+  @com.google.api.client.util.Key
+  private java.lang.String message;
 
   /**
    * @return value or {@code null} for none
@@ -59,7 +59,7 @@ public final class LineLength extends com.google.api.client.json.GenericJson {
   /**
    * @param companyEntityKey companyEntityKey or {@code null} for none
    */
-  public LineLength setCompanyEntityKey(java.lang.String companyEntityKey) {
+  public Favorite setCompanyEntityKey(java.lang.String companyEntityKey) {
     this.companyEntityKey = companyEntityKey;
     return this;
   }
@@ -74,7 +74,7 @@ public final class LineLength extends com.google.api.client.json.GenericJson {
   /**
    * @param entityKey entityKey or {@code null} for none
    */
-  public LineLength setEntityKey(java.lang.String entityKey) {
+  public Favorite setEntityKey(java.lang.String entityKey) {
     this.entityKey = entityKey;
     return this;
   }
@@ -82,26 +82,26 @@ public final class LineLength extends com.google.api.client.json.GenericJson {
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.Long getLength() {
-    return length;
+  public java.lang.String getMessage() {
+    return message;
   }
 
   /**
-   * @param length length or {@code null} for none
+   * @param message message or {@code null} for none
    */
-  public LineLength setLength(java.lang.Long length) {
-    this.length = length;
+  public Favorite setMessage(java.lang.String message) {
+    this.message = message;
     return this;
   }
 
   @Override
-  public LineLength set(String fieldName, Object value) {
-    return (LineLength) super.set(fieldName, value);
+  public Favorite set(String fieldName, Object value) {
+    return (Favorite) super.set(fieldName, value);
   }
 
   @Override
-  public LineLength clone() {
-    return (LineLength) super.clone();
+  public Favorite clone() {
+    return (Favorite) super.clone();
   }
 
 }
