@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="edu.rosehulman.hellomenu.MainActivity" >
+
+    <item
+        android:id="@+id/company_map"
+        android:title="@string/map"
+        android:showAsAction="ifRoom" />
+    
+
+</menu>

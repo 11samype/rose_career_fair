@@ -34,6 +34,7 @@ public class NoteActivity extends Activity {
 
 	boolean scheduled;
 	private Company mCompany;
+	private Note mNote;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +52,10 @@ public class NoteActivity extends Activity {
 		mCompany.setMajors(extras.getStringArrayList(MainActivity.KEY_COMPANY_MAJORS));
 		mCompany.setJobs(extras.getStringArrayList(MainActivity.KEY_COMPANY_JOBS));
 		
-		EditText editNote = (EditText)findViewById(R.id.notes);
+		setTitle(mCompany.getName() + " " + getString(R.string.notes));
 		
-		
+		mNote = new Note();
+		requestNote();
 		
 		scheduled = false;
 		
@@ -144,28 +146,82 @@ public class NoteActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				
+				EditText noteEditText = (EditText)findViewById(R.id.notes);
+				
+				mNote.setNote(noteEditText.getText().toString());
+				
+				(new InsertNoteTask()).execute(mNote);
+				
 				finish();
 				
 			}
 		});
 	}
 	
-//	class QueryForNoteTask extends AsyncTask<String, Void, Note> {
-//
-//		@Override
-//		protected Note doInBackground(String... params) {
-//			Note returnedValue = null;
-//			
-//			try {
-//				returnedValue = MainActivity.mService.note().company(mCompany.getEntityKey());
-//			} catch (IOException e) {
-//				Log.e(MainActivity.RCF, "Error in loading, note is null: " + e);
-//			}
-//			
-//			Log.d(MainActivity.RCF, "linelength: " + returnedValue.getNote());
-//			
-//			return returnedValue;
-//		}
-//		
-//	}
+	private void requestNote() {
+		(new QueryForNoteTask()).execute();
+		
+	}
+
+	class QueryForNoteTask extends AsyncTask<String, Void, Note> {
+
+		@Override
+		protected Note doInBackground(String... params) {
+			Note returnedValue = null;
+			
+			try {
+				returnedValue = MainActivity.mService.note().company(mCompany.getEntityKey()).execute();
+			} catch (IOException e) {
+				Log.e(MainActivity.RCF, "Error in loading, note is null: " + e);
+			}
+			
+			Log.d(MainActivity.RCF, "note: " + returnedValue.getEntityKey());
+			
+			return returnedValue;
+		}
+		
+		@Override
+		protected void onPostExecute(Note result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+			if (result == null) {
+				Log.e(MainActivity.RCF, "Error in loading, note is null");
+			}
+			
+			mNote = result;
+			
+			EditText noteEditText = (EditText)findViewById(R.id.notes);
+			
+			if (mNote != null) {
+				noteEditText.setText(mNote.getNote());
+			}
+		}
+		
+	}
+	
+	class InsertNoteTask extends AsyncTask<Note, Void, Note> {
+
+		@Override
+		protected Note doInBackground(Note... notes) {
+			Note returnNote = null;
+			
+			try {
+				returnNote = MainActivity.mService.note().insert(notes[0]).execute();
+			} catch (IOException e) {
+				Log.e(MainActivity.RCF, "Error inserting note");
+			}
+			
+			return returnNote;
+		}
+		
+		@Override
+		protected void onPostExecute(Note result) {
+			if (result == null) {
+				Log.e(MainActivity.RCF, "Error in insert, returned value is null");
+			}
+			super.onPostExecute(result);
+		}
+		
+	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">RoseCareerFair</string>
+    <string name="app_name">Career Fair</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_activity_map">MapActivity</string>
@@ -49,5 +49,8 @@
     <string name="unknown">Unknown</string>
     <string name="title_activity_interviews">InterviewsActivity</string>
     <string name="account">Account</string>
+    <string name="na">N/A</string>
+    <string name="az">A-Z</string>
+    <string name="za">Z-A</string>
 
 </resources>

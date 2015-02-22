@@ -3,19 +3,23 @@
     tools:context="edu.rosehulman.hellomenu.MainActivity" >
 
     <item
-        android:id="@+id/map"
+        android:id="@+id/main_sort"
+        android:title="@string/za"
+        android:showAsAction="ifRoom" />
+    
+    <item
+        android:id="@+id/main_map"
         android:title="@string/map"
-        android:showAsAction="always" />
+        android:showAsAction="ifRoom" />
     
     <item
-        android:id="@+id/profile"
+        android:id="@+id/main_profile"
         android:title="@string/profile"
-        android:showAsAction="always" />
+        android:showAsAction="ifRoom" />
     
     <item
-        android:id="@+id/account"
+        android:id="@+id/main_account"
         android:title="@string/account"
-        android:showAsAction="always" />
+        android:showAsAction="ifRoom" />
     
-
 </menu>

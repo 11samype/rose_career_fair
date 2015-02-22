@@ -48,6 +48,8 @@ public class MainActivity extends ListActivity {
 	public static final String SHARED_PREFERENCES_NAME = "RoseCareerFair";
 	public static final String PREF_ACCOUNT_NAME = "PREF_ACCOUNT_NAME";
 	
+	private String mCompanyOrder;
+	
 	GoogleAccountCredential mCredential;
 	
 	SharedPreferences mSettings = null;
@@ -56,6 +58,23 @@ public class MainActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		mCompanyOrder = "name";
+		
+		getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				com.appspot.rose_hulman_career_fair.careerfair.model.Company currentCompany = (com.appspot.rose_hulman_career_fair.careerfair.model.Company) getListAdapter().getItem(position);
+				
+				// TODO
+				
+				view.setBackgroundColor(getResources().getColor(R.color.light_sky_blue));
+				
+				return true;
+			}
+		});
 		
 		mCredential = GoogleAccountCredential.usingAudience(this, 
 				"server:client_id:226229190503-97pgt09qc8tr0g368pa6fpf0kjsof3pm.apps.googleusercontent.com");
@@ -73,17 +92,6 @@ public class MainActivity extends ListActivity {
 		}
 		
 		updateCompanies();
-		
-	}
-	
-	private class MyOnLongItemClickListener implements ListView.OnItemLongClickListener{
-
-		@Override
-		public boolean onItemLongClick(AdapterView<?> list, View view,
-				int position, long id) {
-			view.setBackgroundColor(getResources().getColor(R.color.red));
-			return false;
-		}
 		
 	}
 	
@@ -156,7 +164,7 @@ public class MainActivity extends ListActivity {
 		int id = item.getItemId();
 		
 		switch (id) {
-		case R.id.map:
+		case R.id.main_map:
 			
 			DialogFragment df = new DialogFragment() {
 				
@@ -177,16 +185,30 @@ public class MainActivity extends ListActivity {
 			
 			return true;
 			
-		case R.id.profile:
+		case R.id.main_profile:
 			
 			Intent profileIntent = new Intent(this, ProfileActivity.class);
 			startActivity(profileIntent);
 			
 			return true;
 			
-		case R.id.account:
+		case R.id.main_account:
 			
 			chooseAccount();
+			
+			return true;
+			
+		case R.id.main_sort:
+			
+			if (mCompanyOrder == "name") {
+				mCompanyOrder = "-name";
+				item.setTitle(R.string.az);
+			} else {
+				mCompanyOrder = "name";
+				item.setTitle(R.string.za);
+				
+			}
+			updateCompanies();
 			
 			return true;
 
@@ -195,6 +217,7 @@ public class MainActivity extends ListActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+
 	class QueryForCompaniesTask extends AsyncTask<Void, Void, CompanyCollection> {
 
 		@Override
@@ -203,9 +226,10 @@ public class MainActivity extends ListActivity {
 			CompanyCollection companies = null;
 			try {
 				Log.d(RCF, "Using account name = " + mCredential.getSelectedAccountName());
+				Log.d(RCF, "Order: " + mCompanyOrder);
 				Company.List query = mService.company().list();
 				query.setLimit(50L); // pages?
-				query.setOrder("name");
+				query.setOrder(mCompanyOrder);
 				companies = query.execute();
 			} catch (IOException e) {
 				Log.e(RCF, "Error in loading, companies is null: " + e);

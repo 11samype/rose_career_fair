@@ -57,6 +57,8 @@ public class CompanyActivity extends Activity {
 		mCompany.setMajors(extras.getStringArrayList(MainActivity.KEY_COMPANY_MAJORS));
 		mCompany.setJobs(extras.getStringArrayList(MainActivity.KEY_COMPANY_JOBS));
 		
+		setTitle(mCompany.getName());
+		
 		Log.d(MainActivity.RCF, mCompany.getLogo());
 		
 		ImageView companyLogo = (ImageView) findViewById(R.id.company_logo);
@@ -210,10 +212,16 @@ public class CompanyActivity extends Activity {
 		
 		String majorString = "";
 		
-		for (String major : majors) {
-			Log.d(MainActivity.RCF, major);
-			majorString += (" " + major + ",");
+		if (majors == null) {
+			majorString = getString(R.string.na) + " ";
+		} else {
 			
+			for (String major : majors) {
+				Log.d(MainActivity.RCF, major);
+				majorString += (" " + major + ",");
+				
+			}
+
 		}
 		
 		return majorString.substring(0, majorString.length() - 1);
@@ -224,10 +232,15 @@ public class CompanyActivity extends Activity {
 		
 		String jobString = "";
 		
-		for (String job : jobs) {
-			Log.d(MainActivity.RCF, job);
-			jobString += (job + " \n");
+		if (jobs == null) {
+			jobString = getString(R.string.na) + " ";
 			
+		} else {
+			for (String job : jobs) {
+				Log.d(MainActivity.RCF, job);
+				jobString += (job + " \n");
+				
+			}
 		}
 		
 		return jobString.substring(0, jobString.length() - 1);
@@ -236,6 +249,42 @@ public class CompanyActivity extends Activity {
 	private void updateLineStatus() {
 		(new QueryForLineLengthTask()).execute();
 		
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.company, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		
+		switch (id) {
+		case R.id.company_map:
+			
+			DialogFragment df = new DialogFragment() {
+				
+				@Override
+				public Dialog onCreateDialog(Bundle savedInstanceState) {
+					
+					AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
+					LayoutInflater inflator = getActivity().getLayoutInflater();
+					builder.setView(inflator.inflate(R.layout.dialog_map, null));
+					builder.setTitle(getString(R.string.map));
+					
+					return builder.create();
+				}
+				
+			};
+			
+			df.show(getFragmentManager(), "map");
+			
+			return true;
+		}
+		
+		return super.onOptionsItemSelected(item);
 	}
 	
 	public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {

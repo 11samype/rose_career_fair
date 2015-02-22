@@ -6,8 +6,9 @@ Created on Feb 9, 2015
 
 import endpoints
 import protorpc
-from models import Company, Note, Interview, LineLength, Job, Major
+from models import Company, Note, LineLength, Favorite
 import main
+from endpoints.users_id_token import get_current_user
 
 WEB_CLIENT_ID = "226229190503-97pgt09qc8tr0g368pa6fpf0kjsof3pm.apps.googleusercontent.com"
 ANDROID_CLIENT_ID = "226229190503-7b5arfm067fj9gb8sv3mabto3ge9ldbc.apps.googleusercontent.com"
@@ -23,7 +24,8 @@ class CareerFairApi(protorpc.remote.Service):
         if request.from_datastore:
             my_company = request
         else:
-            my_company = Company(parent=main.PARENT_KEY, name=request.name, bio=request.bio, logo=request.logo)
+            my_company = Company(parent=main.PARENT_KEY, name=request.name, bio=request.bio, logo=request.logo,
+                                 jobs=request.jobs, majors=request.majors, table=request.table)
             
         my_company.put()
         return my_company
@@ -47,7 +49,7 @@ class CareerFairApi(protorpc.remote.Service):
         if request.from_datastore:
             my_linelength = request
         else:
-            my_linelength = LineLength(length=request.length, company_entity_key=request.company_entity_key)
+            my_linelength = LineLength(parent=main.PARENT_KEY, length=request.length, company_entity_key=request.company_entity_key)
         
         my_linelength.put()
         return my_linelength
@@ -87,11 +89,18 @@ class CareerFairApi(protorpc.remote.Service):
         length = int(round(sumLength/count))
         return LineLength(length=length)
     
+    @Note.query_method(name="note.list", path="note/list", http_method="GET", 
+                          query_fields=("limit", "order", "pageToken"))
+    def note_list(self, query):
+        return query
+    
     @Note.method(user_required=True, name="note.company", path="note/company/{company_entity_key}", http_method="GET", 
                        request_fields=("company_entity_key",))
     def note_for_company(self, request):
         user = endpoints.get_current_user()
         query = Note.query(ancestor=main.get_parent_key(user)).filter(Note.company_entity_key == request.company_entity_key)
+        
+        returnNote = Note(note="", company_entity_key=request.company_entity_key)
         
         for note in query:
             returnNote = note
@@ -110,5 +119,45 @@ class CareerFairApi(protorpc.remote.Service):
              
         note_with_parent.put()
         return note_with_parent
-
+    
+    @Favorite.query_method(name="favorite.list", path="favorite/list", http_method="GET", 
+                          query_fields=("limit", "order", "pageToken"))
+    def favorite_list(self, query):
+        return query
+    
+    @Favorite.method(user_required=True, name="favorite.company", path="favorite/company/{company_entity_key}", http_method="GET", 
+                       request_fields=("company_entity_key",))
+    def favorite_for_company(self, request):
+        user = endpoints.get_current_user()
+        query = Favorite.query(ancestor=main.get_parent_key(user)).filter(Favorite.company_entity_key == request.company_entity_key)
+        
+        returnFavorite = Favorite(message="null")
+        
+        for favorite in query:
+            returnFavorite = favorite
+            break
+        
+        return returnFavorite
+     
+    @Favorite.method(user_required=True, name="favorite.insert", path="favorite/insert", http_method="POST")
+     
+    def favorite_insert(self, favorite):
+        if favorite.from_datastore:
+            favorite_with_parent = favorite
+        else:
+            favorite_with_parent = Favorite(parent=main.get_parent_key(endpoints.get_current_user()),
+                                    company_entity_key = favorite.company_entity_key)
+             
+        favorite_with_parent.put()
+        return favorite_with_parent
+    
+    @Favorite.method(user_required=True, name="favorite.delete", path="favorite/delete/{entityKey}", 
+                    http_method="DELETE", request_fields=("entityKey",))
+    
+    def favorite_delete(self, request):
+        if not request.from_datastore:
+            raise endpoints.NotFoundException("Item to delete not found")
+        request.key.delete()
+        return Favorite(message="deleted")
+    
 app = endpoints.api_server([CareerFairApi], restricted=False)
