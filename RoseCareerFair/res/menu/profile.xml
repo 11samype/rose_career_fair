@@ -7,5 +7,10 @@
         android:title="@string/map"
         android:showAsAction="ifRoom" />
     
+    <item
+        android:id="@+id/profile_help"
+        android:title="@string/help"
+        android:showAsAction="ifRoom" />
+    
 
 </menu>

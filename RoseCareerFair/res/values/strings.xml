@@ -56,5 +56,7 @@
     <string name="table_start">Table N/A</string>
     <string name="website">Website</string>
     <string name="sort">Sort</string>
+    <string name="help">Help</string>
+    <string name="profile_help_text">Add or remove a favorite by long pressing on a company in the main menu!</string>
 
 </resources>

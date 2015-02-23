@@ -25,7 +25,7 @@
     
     <item
         android:id="@+id/main_profile"
-        android:title="@string/profile"
+        android:title="@string/favorites"
         android:showAsAction="ifRoom" />
     
     <item

@@ -11,6 +11,7 @@ import main
 from endpoints.users_id_token import get_current_user
 from google.appengine.ext.key_range import ndb
 
+
 WEB_CLIENT_ID = "226229190503-97pgt09qc8tr0g368pa6fpf0kjsof3pm.apps.googleusercontent.com"
 ANDROID_CLIENT_ID = "226229190503-7b5arfm067fj9gb8sv3mabto3ge9ldbc.apps.googleusercontent.com"
 
@@ -77,6 +78,7 @@ class CareerFairApi(protorpc.remote.Service):
     @Company.query_method(user_required=True, name="company.favorite.list", path="company/favorite/list", http_method="GET", 
                           query_fields=("limit", "order", "pageToken"))
     def company_list_favorite(self, query):
+        # list of companies with favorite boolean attached to favorites
         user = endpoints.get_current_user()
         
         for company in query:
@@ -89,6 +91,39 @@ class CareerFairApi(protorpc.remote.Service):
                 company.favorite = True
            
         return query
+    
+#     @Company.query_method(user_required=True, name="company.favorite.favorite", path="company/favorite/favorite", http_method="GET", 
+#                           query_fields=("limit", "order", "pageToken"))
+#     def company_favorite_favorite(self, query):
+#         # list of just the users favorite companies
+#         user = endpoints.get_current_user()
+#         
+#         favQuery = Favorite.query(ancestor=main.get_parent_key(user))
+#         
+#         favKeys = []
+#         
+#         for fav in favQuery:
+# #             favKeys.append(fav.company_entity_key)
+#             favKeys.append(str (fav.company_entity_key))
+#             logging.info(str (fav.company_entity_key))
+#         
+# #         list_of_companies = Company.query()
+#         
+#         
+#         
+# #         list_of_companies.filter('__Key__ IN', favKeys)
+# 
+# #         list_of_companies = Company.get_by_id(favKeys)
+#         
+# #         return list_of_companies
+# 
+# #         result = ndb.get_multi(favKeys)
+# 
+#         Company.get
+# 
+#         result = ndb.get_multi(favKeys)
+#         
+#         return result
     
     @Company.method(name="company.delete", path="company/delete/{entityKey}", 
                     http_method="DELETE", request_fields=("entityKey",))

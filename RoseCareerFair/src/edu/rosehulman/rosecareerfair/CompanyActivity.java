@@ -61,7 +61,15 @@ public class CompanyActivity extends Activity {
 		mCompany.setMajors(extras.getStringArrayList(MainActivity.KEY_COMPANY_MAJORS));
 		mCompany.setJobs(extras.getStringArrayList(MainActivity.KEY_COMPANY_JOBS));
 		
-		setTitle(mCompany.getName());
+		String titleString = mCompany.getName() + ": " + getString(R.string.table) + " ";
+		
+		if (mCompany.getTable() == null) {
+			titleString += getString(R.string.na);
+		} else {
+			titleString += mCompany.getTable().intValue();
+		}
+		
+		setTitle(mCompany.getName() + " " + getString(R.string.table) + " " + mCompany.getTable().intValue());
 		
 		Log.d(MainActivity.RCF, mCompany.getLogo());
 		
@@ -218,10 +226,6 @@ public class CompanyActivity extends Activity {
 		TextView majorTextView = (TextView)findViewById(R.id.company_major_list_text);
 		
 		majorTextView.setText(getMajorText());
-		
-		TextView roomTextView = (TextView)findViewById(R.id.company_table);
-		
-		roomTextView.setText("Table " + Integer.toString(mCompany.getTable().intValue()));
 		
 		
 	}
