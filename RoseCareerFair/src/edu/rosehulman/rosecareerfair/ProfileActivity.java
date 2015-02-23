@@ -179,7 +179,7 @@ public class ProfileActivity extends ListActivity {
 			}
 			
 			FavoriteArrayAdapter adapter = new FavoriteArrayAdapter(ProfileActivity.this,
-					android.R.layout.simple_expandable_list_item_1, android.R.id.text1, companies);
+					android.R.layout.simple_expandable_list_item_2, android.R.id.text1, companies);
 			setListAdapter(adapter);
 		}
 		

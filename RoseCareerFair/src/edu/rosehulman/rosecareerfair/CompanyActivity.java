@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import com.appspot.rose_hulman_career_fair.careerfair.Careerfair;
@@ -27,6 +28,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.provider.CalendarContract.Events;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,9 +37,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class CompanyActivity extends Activity {
 	
@@ -215,6 +221,73 @@ public class CompanyActivity extends Activity {
 				Intent internetIntent = new Intent(Intent.ACTION_VIEW);
 				internetIntent.setData(Uri.parse(mCompany.getWebsite()));
 				startActivity(internetIntent);
+				
+			}
+		});
+		
+		final Button interviewButton = (Button) findViewById(R.id.interview_button);
+		interviewButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				DialogFragment df = new DialogFragment() {
+					@Override
+					public Dialog onCreateDialog(Bundle savedInstanceState) {
+						AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+						builder.setTitle(R.string.interview);
+						
+						LayoutInflater inflator = LayoutInflater.from(getApplicationContext());
+						View interviewView = inflator.inflate(R.layout.dialog_interview, null);
+						
+						builder.setView(interviewView);
+						builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								
+								DatePicker datePicker = (DatePicker) ((AlertDialog) dialog).findViewById(R.id.datePicker1);
+								int year = datePicker.getYear();
+								int month = datePicker.getMonth();
+								int dayOfMonth = datePicker.getDayOfMonth();
+								
+								TimePicker timePicker = (TimePicker) ((AlertDialog) dialog).findViewById(R.id.timePicker1);
+								int hour = timePicker.getCurrentHour();
+								int minute = timePicker.getCurrentMinute();
+								
+//								String leadingZero = "";
+								
+//								if (minute < 10) {
+//									leadingZero = "0";
+//								}
+								Calendar beginTime = Calendar.getInstance();
+						    	beginTime.set(year, month, dayOfMonth, hour, minute);
+						        Intent intent = new Intent(Intent.ACTION_INSERT);
+						        intent.setType("vnd.android.cursor.item/event");
+						        intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
+						        intent.putExtra(Events.TITLE, mCompany.getName() + " Interview");
+						        intent.putExtra(Events.DESCRIPTION, "Interview");
+
+						        // Use the Calendar app to view the time.
+						        startActivity(intent);
+//						        Toast.makeText(getApplicationContext(), "Interview made", Toast.LENGTH_LONG).show();
+
+							}
+						});
+						
+						
+						builder.setNeutralButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
+						
+						return builder.create();
+					}
+				};
+				df.show(getFragmentManager(), "interview");
 				
 			}
 		});

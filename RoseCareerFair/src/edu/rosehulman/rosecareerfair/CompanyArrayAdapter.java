@@ -28,6 +28,9 @@ public class CompanyArrayAdapter extends ArrayAdapter<Company>{
 		View view = super.getView(position, convertView, parent);
 		TextView companyTextView = (TextView) view.findViewById(android.R.id.text1);
 		companyTextView.setText(getItem(position).getName());
+		
+		TextView tableTextView = (TextView) view.findViewById(android.R.id.text2);
+		tableTextView.setText(mContext.getString(R.string.table) + " " + getItem(position).getTable());
 		if (getItem(position).getFavorite()) {
 			view.setBackgroundColor(mContext.getResources().getColor(R.color.alice_blue));
 		}

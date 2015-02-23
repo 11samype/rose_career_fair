@@ -265,8 +265,9 @@ public class MainActivity extends ListActivity {
 			}
 			
 			List<com.appspot.rose_hulman_career_fair.careerfair.model.Company> companies = result.getItems();
+			
 			CompanyArrayAdapter adapter = new CompanyArrayAdapter(MainActivity.this,
-					android.R.layout.simple_expandable_list_item_1, android.R.id.text1, companies);
+					android.R.layout.simple_expandable_list_item_2, android.R.id.text1, companies);
 			setListAdapter(adapter);
 		}
 		
